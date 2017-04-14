@@ -12,9 +12,15 @@
     <UserControl.Resources>
         <ResourceDictionary>
             <DataTemplate x:Key="ClassMemberTemplate">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="{Binding Name}" />
-                </StackPanel>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Image Source="..\Icons\method.png" Grid.Column="0"/>
+                    <Image Source="..\Icons\property.jpg" Grid.Column="0"/>
+                    <TextBlock Text="{Binding Name}" Grid.Column="1"/>
+                </Grid>
             </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>
