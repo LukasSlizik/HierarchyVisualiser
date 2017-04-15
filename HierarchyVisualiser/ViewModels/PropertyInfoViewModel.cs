@@ -5,15 +5,19 @@ namespace HierarchyVisualiser.ViewModels
     /// <summary>
     /// ViewModel for a Class Property.
     /// </summary>
-    public class PropertyInfoViewModel : ViewModelBase
+    internal class PropertyInfoViewModel : ClassMemberViewModel
     {
         private PropertyInfo _pi;
 
-        public PropertyInfoViewModel(PropertyInfo pi)
+        public PropertyInfoViewModel(PropertyInfo pi) : this()
         {
             _pi = pi;
         }
 
+        public PropertyInfoViewModel() { }
+
         public string Name => _pi.Name;
+
+        public override MemberType MemberType => MemberType.Property;
     }
 }

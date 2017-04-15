@@ -4,23 +4,34 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:behaviors="clr-namespace:HierarchyVisualiser.Behaviors"
-             xmlns:local="clr-namespace:HierarchyVisualiser"
+             xmlns:local="clr-namespace:HierarchyVisualiser.Views"
+             xmlns:viewModels="clr-namespace:HierarchyVisualiser.ViewModels"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              behaviors:DragAndDropBehavior.CanBeDragged="True">
 
     <UserControl.Resources>
         <ResourceDictionary>
-            <DataTemplate x:Key="ClassMemberTemplate">
+            <DataTemplate x:Key="ClassMemberTemplate" >
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <Image Source="..\Icons\method.png" Grid.Column="0"/>
-                    <Image Source="..\Icons\property.jpg" Grid.Column="0"/>
+                    <Image Source="..\Icons\method.png" Grid.Column="0" x:Name="methodIcon"/>
+                    <Image Source="..\Icons\property.jpg" Grid.Column="0" x:Name="propertyIcon" />
                     <TextBlock Text="{Binding Name}" Grid.Column="1"/>
                 </Grid>
+                <DataTemplate.Triggers>
+                    <DataTrigger Binding="{Binding MemberType}" Value="Method">
+                        <Setter TargetName="methodIcon" Property="Visibility" Value="Visible" />
+                        <Setter TargetName="propertyIcon" Property="Visibility" Value="Hidden" />
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding MemberType}" Value="Property">
+                        <Setter TargetName="methodIcon" Property="Visibility" Value="Hidden" />
+                        <Setter TargetName="propertyIcon" Property="Visibility" Value="Visible" />
+                    </DataTrigger>
+                </DataTemplate.Triggers>
             </DataTemplate>
         </ResourceDictionary>
     </UserControl.Resources>

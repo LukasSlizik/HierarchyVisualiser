@@ -6,7 +6,7 @@ namespace HierarchyVisualiser.ViewModels
     /// <summary>
     /// Represents a Class, identiefied by its Name, as a Collection of Methods and Properties.
     /// </summary>
-    public class ClassViewModel : ViewModelBase
+    internal class ClassViewModel : ViewModelBase
     {
         private ObservableCollection<MethodInfoViewModel> _methods;
         private ObservableCollection<PropertyInfoViewModel> _properties;

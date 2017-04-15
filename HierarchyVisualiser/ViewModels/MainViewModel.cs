@@ -8,7 +8,7 @@ namespace HierarchyVisualiser.ViewModels
     /// <summary>
     /// MainViewModel Class. Contains a Collection of all visualised Classes.
     /// </summary>
-    public class MainViewModel : ViewModelBase
+    internal class MainViewModel : ViewModelBase
     {
         private ObservableCollection<ClassViewModel> _classes;
 

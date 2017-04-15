@@ -58,6 +58,8 @@
     <Compile Include="Behaviors\DragAndDropBehavior.cs" />
     <Compile Include="TestClass.cs" />
     <Compile Include="TestClass2.cs" />
+    <Compile Include="ViewModels\ClassMemberViewModel.cs" />
+    <Compile Include="ViewModels\MemberType.cs" />
     <Compile Include="ViewModels\MethodInfoViewModel.cs" />
     <Compile Include="ViewModels\PropertyInfoViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />

@@ -6,7 +6,7 @@ namespace HierarchyVisualiser.ViewModels
     /// <summary>
     /// Base Class for all ViewModels.
     /// </summary>
-    public abstract class ViewModelBase : INotifyPropertyChanged
+    internal abstract class ViewModelBase : INotifyPropertyChanged
     {
         protected void RaisePropertyChanged([CallerMemberName] string propertyName = "")
         {
