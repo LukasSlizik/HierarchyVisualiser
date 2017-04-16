@@ -11,9 +11,12 @@ namespace HierarchyVisualiser.ViewModels
     internal class MainViewModel : ViewModelBase
     {
         private ObservableCollection<AssemblyViewModel> _assemblies;
+        private ObservableCollection<ClassViewModel> _selectedClasses;
 
         public MainViewModel()
         {
+            SelectedClasses = new ObservableCollection<ClassViewModel>();
+
             PopulateAssemblies();
         }
 
@@ -31,7 +34,11 @@ namespace HierarchyVisualiser.ViewModels
 
         private void OnSelectionChanged(object sender, EventArgs args)
         {
-            RaisePropertyChanged(nameof(SelectedClasses));
+            var classViewModel = (ClassViewModel)sender;
+            if (classViewModel.IsSelected)
+                SelectedClasses.Add(classViewModel);
+            else
+                SelectedClasses.Remove(classViewModel);
         }
 
 
@@ -55,20 +62,15 @@ namespace HierarchyVisualiser.ViewModels
         {
             get
             {
-                var l = new ObservableCollection<ClassViewModel>();
+                return _selectedClasses;
+            }
+            set
+            {
+                if (_selectedClasses == value)
+                    return;
 
-                foreach (var a in Assemblies)
-                {
-                    foreach (var n in a.Namespaces)
-                    {
-                        foreach (var c in n.Classes)
-                        {
-                            if (c.IsSelected)
-                                l.Add(c);
-                        }
-                    }
-                }
-                return l;    
+                _selectedClasses = value;
+                RaisePropertyChanged();
             }
         }
     }
