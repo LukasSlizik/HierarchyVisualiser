@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
+using System;
 
 namespace HierarchyVisualiser.ViewModels
 {
@@ -11,11 +12,17 @@ namespace HierarchyVisualiser.ViewModels
     {
         private Assembly _wrapeedAssembly;
         private ObservableCollection<NamespaceViewModel> _namespaces;
+        public event EventHandler SelectionChanged;
 
         public AssemblyViewModel(Assembly assembly)
         {
             WrappedAssembly = assembly;
             PopulateNamespaces();
+        }
+
+        private void OnSelectionChanged(object sender, EventArgs args)
+        {
+            SelectionChanged?.Invoke(sender, null);
         }
 
         /// <summary>
@@ -24,6 +31,10 @@ namespace HierarchyVisualiser.ViewModels
         private void PopulateNamespaces()
         {
             Namespaces = new ObservableCollection<NamespaceViewModel>(WrappedAssembly.GetTypes().Select(t => new NamespaceViewModel(t.Namespace, WrappedAssembly)).Distinct());
+            foreach (var ns in Namespaces)
+            {
+                ns.SelectionChanged += OnSelectionChanged;
+            }
         }
 
         /// <summary>

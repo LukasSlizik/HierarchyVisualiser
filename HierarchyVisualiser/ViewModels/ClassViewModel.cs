@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using HierarchyVisualiser.ViewModels.ClassMembers;
+using System;
 
 namespace HierarchyVisualiser.ViewModels
 {
@@ -13,6 +14,7 @@ namespace HierarchyVisualiser.ViewModels
         private ObservableCollection<PropertyInfoViewModel> _properties;
         private bool _isSelected;
         private string _className;
+        internal event EventHandler SelectionChanged;
 
         public ClassViewModel(string className, IEnumerable<PropertyInfoViewModel> properties, IEnumerable<MethodInfoViewModel> methods)
         {
@@ -35,6 +37,8 @@ namespace HierarchyVisualiser.ViewModels
                 if (_isSelected == value)
                     return;
                 _isSelected = value;
+
+                SelectionChanged?.Invoke(this, null);
                 RaisePropertyChanged();
             }
         }

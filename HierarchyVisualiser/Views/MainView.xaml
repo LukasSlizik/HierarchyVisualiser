@@ -43,15 +43,13 @@
 
         <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
 
-        <TextBlock Text="Placeholder" Grid.Column="2"/>
-
-        <!--<ItemsControl Grid.Column="1" ItemsSource="{Binding Classes}">
+        <ItemsControl Grid.Column="2" ItemsSource="{Binding SelectedClasses}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Canvas />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
-        </ItemsControl>-->
+        </ItemsControl>
     </Grid>
 
 </UserControl>

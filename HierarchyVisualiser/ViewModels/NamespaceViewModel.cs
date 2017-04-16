@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using System.Reflection;
 using System.Linq;
+using System;
 using HierarchyVisualiser.ViewModels.ClassMembers;
 
 namespace HierarchyVisualiser.ViewModels
@@ -13,6 +14,7 @@ namespace HierarchyVisualiser.ViewModels
         private string _namespace;
         private ObservableCollection<ClassViewModel> _classes;
         private Assembly _assembly;
+        public event EventHandler SelectionChanged;
 
         public NamespaceViewModel(string @namespace, Assembly @assembly)
         {
@@ -20,6 +22,11 @@ namespace HierarchyVisualiser.ViewModels
             _assembly = @assembly;
 
             PopulateClasses();
+        }
+
+        private void OnSelectionChanged(object sender, EventArgs args)
+        {
+            SelectionChanged?.Invoke(sender, null);
         }
 
         /// <summary>
@@ -71,6 +78,8 @@ namespace HierarchyVisualiser.ViewModels
                 var propInfos = t.GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance);
                 var methodInfos = t.GetMethods(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance).Where(m => !m.IsSpecialName);
                 var testClass = new ClassViewModel(t.Name, propInfos.Select(pi => new PropertyInfoViewModel(pi)), methodInfos.Select(mi => new MethodInfoViewModel(mi)));
+
+                testClass.SelectionChanged += OnSelectionChanged;
                 Classes.Add(testClass);
             }
         }
