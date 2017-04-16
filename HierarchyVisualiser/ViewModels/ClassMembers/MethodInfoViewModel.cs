@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace HierarchyVisualiser.ViewModels
+namespace HierarchyVisualiser.ViewModels.ClassMembers
 {
     /// <summary>
     /// ViewModel for a Class Method.
@@ -9,12 +9,10 @@ namespace HierarchyVisualiser.ViewModels
     {
         private MethodInfo _mi;
 
-        public MethodInfoViewModel(MethodInfo mi) : this()
+        public MethodInfoViewModel(MethodInfo mi)
         {
             _mi = mi;
         }
-
-        public MethodInfoViewModel() { }
 
         public string Name => _mi.Name;
 

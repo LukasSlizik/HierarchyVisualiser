@@ -1,15 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using HierarchyVisualiser.ViewModels.ClassMembers;
 
 namespace HierarchyVisualiser.ViewModels
 {
     /// <summary>
-    /// Represents a Class, identiefied by its Name, as a Collection of Methods and Properties.
+    /// Represents a Class, identiefied by its Name, as a Collection of Class Members (Methods, Events, Constructors, Properties).
     /// </summary>
     internal class ClassViewModel : ViewModelBase
     {
         private ObservableCollection<MethodInfoViewModel> _methods;
         private ObservableCollection<PropertyInfoViewModel> _properties;
+        private bool _isSelected;
+        private string _className;
 
         public ClassViewModel(string className, IEnumerable<PropertyInfoViewModel> properties, IEnumerable<MethodInfoViewModel> methods)
         {
@@ -19,9 +22,26 @@ namespace HierarchyVisualiser.ViewModels
         }
 
         /// <summary>
-        /// Class Name.
+        /// Gets or sets if the Class was selected in the Navigation Tree.
         /// </summary>
-        private string _className;
+        public bool IsSelected
+        {
+            get
+            {
+                return _isSelected;
+            }
+            set
+            {
+                if (_isSelected == value)
+                    return;
+                _isSelected = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Gets of Sets the Class Name.
+        /// </summary>
         public string ClassName
         {
             get

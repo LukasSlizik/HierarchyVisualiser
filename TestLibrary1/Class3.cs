@@ -4,16 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HierarchyVisualiser
+namespace TestLibrary1
 {
-    class TestClass1
+    public class Class3
     {
-        public int MyProperty1 { get; set; }
-        public int MyProperty2 { get; set; }
-        public int MyProperty3 { get; set; }
-
         public void Method1() { }
         public void Method2() { }
         public void Method3() { }
+
+        public string Prop1 { get; set; }
+        public string Prop2 { get; set; }
+        public string Prop3 { get; set; }
     }
 }

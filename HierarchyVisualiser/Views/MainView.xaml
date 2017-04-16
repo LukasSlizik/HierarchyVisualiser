@@ -10,19 +10,48 @@
     <UserControl.DataContext>
         <viewModels:MainViewModel/>
     </UserControl.DataContext>
-    
+
     <UserControl.Resources>
         <DataTemplate DataType="{x:Type viewModels:ClassViewModel}">
             <views:ClassView/>
         </DataTemplate>
     </UserControl.Resources>
 
-    <ItemsControl ItemsSource="{Binding Classes}">
-        <ItemsControl.ItemsPanel>
-            <ItemsPanelTemplate>
-                <Canvas />
-            </ItemsPanelTemplate>
-        </ItemsControl.ItemsPanel>
-    </ItemsControl>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TreeView ItemsSource="{Binding Assemblies}" Grid.Column="0" BorderThickness="0">
+            <TreeView.Resources>
+                <HierarchicalDataTemplate DataType="{x:Type viewModels:AssemblyViewModel}" ItemsSource="{Binding Namespaces}">
+                    <TextBlock Text="{Binding FullName}" />
+                </HierarchicalDataTemplate>
+                <HierarchicalDataTemplate DataType="{x:Type viewModels:NamespaceViewModel}" ItemsSource="{Binding Classes}">
+                    <TextBlock Text="{Binding Namespace}" />
+                </HierarchicalDataTemplate>
+                <DataTemplate DataType="{x:Type viewModels:ClassViewModel}">
+                    <StackPanel Orientation="Horizontal">
+                        <CheckBox IsChecked="{Binding IsSelected}" />
+                        <TextBlock Text="{Binding ClassName}" />
+                    </StackPanel>
+                </DataTemplate>
+            </TreeView.Resources>
+        </TreeView>
+
+        <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
+
+        <TextBlock Text="Placeholder" Grid.Column="2"/>
+
+        <!--<ItemsControl Grid.Column="1" ItemsSource="{Binding Classes}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+        </ItemsControl>-->
+    </Grid>
 
 </UserControl>

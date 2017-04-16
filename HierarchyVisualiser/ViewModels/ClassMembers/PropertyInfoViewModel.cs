@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace HierarchyVisualiser.ViewModels
+namespace HierarchyVisualiser.ViewModels.ClassMembers
 {
     /// <summary>
     /// ViewModel for a Class Property.
