@@ -30,11 +30,10 @@ namespace HierarchyVisualiser.ViewModels
         /// </summary>
         private void PopulateNamespaces()
         {
-            Namespaces = new ObservableCollection<NamespaceViewModel>(WrappedAssembly.GetTypes().Select(t => new NamespaceViewModel(t.Namespace, WrappedAssembly)).Distinct());
+            var namespaces = WrappedAssembly.GetTypes().Select(t => t.Namespace).Distinct();
+            Namespaces = new ObservableCollection<NamespaceViewModel>(namespaces.Select(ns => new NamespaceViewModel(ns, WrappedAssembly)));
             foreach (var ns in Namespaces)
-            {
                 ns.SelectionChanged += OnSelectionChanged;
-            }
         }
 
         /// <summary>
