@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Reflection;
-using System;
 
 namespace HierarchyVisualiser.ViewModels
 {
@@ -26,8 +25,14 @@ namespace HierarchyVisualiser.ViewModels
             var ass2 = Assembly.LoadFile(@"C:\Users\Lukas\Source\Repos\HierarchyVisualiser\HierarchyVisualiser\bin\Debug\TestLibrary2.dll");
 
             Assemblies = new ObservableCollection<AssemblyViewModel>(new AssemblyViewModel[] { new AssemblyViewModel(ass1), new AssemblyViewModel(ass2) });
+            RegisterEventHandlersOnAssemblies();
+        }
+
+        private void RegisterEventHandlersOnAssemblies()
+        {
             foreach (var assembly in Assemblies)
             {
+                assembly.SelectionChanged -= OnSelectionChanged;
                 assembly.SelectionChanged += OnSelectionChanged;
             }
         }
@@ -58,7 +63,9 @@ namespace HierarchyVisualiser.ViewModels
         public void LoadAssemblyFromFile(string file)
         {
             var a = Assembly.LoadFile(file);
+            var vm = new AssemblyViewModel(a);
             Assemblies.Add(new AssemblyViewModel(a));
+            RegisterEventHandlersOnAssemblies();
         }
 
         /// <summary>
