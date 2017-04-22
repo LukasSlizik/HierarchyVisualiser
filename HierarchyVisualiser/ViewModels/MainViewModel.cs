@@ -8,7 +8,7 @@ namespace HierarchyVisualiser.ViewModels
     /// <summary>
     /// MainViewModel Class. Contains a Collection of all visualised Classes.
     /// </summary>
-    internal class MainViewModel : ViewModelBase
+    internal class MainViewModel : ViewModelBase, IAssemblyFileLoader
     {
         private ObservableCollection<AssemblyViewModel> _assemblies;
         private ObservableCollection<ClassViewModel> _selectedClasses;
@@ -41,6 +41,25 @@ namespace HierarchyVisualiser.ViewModels
                 SelectedClasses.Remove(classViewModel);
         }
 
+        public bool TryLoadAssemblyFromFile(string file)
+        {
+            try
+            {
+                LoadAssemblyFromFile(file);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public void LoadAssemblyFromFile(string file)
+        {
+            var a = Assembly.LoadFile(file);
+            Assemblies.Add(new AssemblyViewModel(a));
+        }
 
         /// <summary>
         /// Collection of all assemblies that are shown in the Navigation Tree.

@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using HierarchyVisualiser.ViewModels;
 
 namespace HierarchyVisualiser.Behaviors
 {
@@ -56,9 +57,13 @@ namespace HierarchyVisualiser.Behaviors
         {
             if (args.Data.GetDataPresent(DataFormats.FileDrop))
             {
-                string[] files = (string[])args.Data.GetData(DataFormats.FileDrop);
+                var el = (FrameworkElement)sender;
+                var ctx = (IAssemblyFileLoader)el.DataContext;
+
+                string[] droppedFiles = (string[])args.Data.GetData(DataFormats.FileDrop);
+                foreach (var file in droppedFiles)
+                    ctx.TryLoadAssemblyFromFile(file);
             }
         }
-
     }
 }
