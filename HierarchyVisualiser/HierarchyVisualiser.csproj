@@ -56,6 +56,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Behaviors\DragAndDropBehavior.cs" />
+    <Compile Include="Behaviors\DragAndDropFileOnTreeViewBehavior.cs" />
     <Compile Include="ViewModels\AssemblyViewModel.cs" />
     <Compile Include="ViewModels\ClassMembers\ClassMemberViewModel.cs" />
     <Compile Include="MemberType.cs" />

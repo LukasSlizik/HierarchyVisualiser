@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:viewModels="clr-namespace:HierarchyVisualiser.ViewModels"
              xmlns:views="clr-namespace:HierarchyVisualiser.Views"
+             xmlns:behaviors="clr-namespace:HierarchyVisualiser.Behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.DataContext>
@@ -24,7 +25,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <TreeView ItemsSource="{Binding Assemblies}" Grid.Column="0" BorderThickness="0">
+        <TreeView ItemsSource="{Binding Assemblies}" Grid.Column="0" BorderThickness="0" behaviors:DragAndDropFileViewBehavior.CanFileBeDropped= "True">
             <TreeView.Resources>
                 <HierarchicalDataTemplate DataType="{x:Type viewModels:AssemblyViewModel}" ItemsSource="{Binding Namespaces}">
                     <TextBlock Text="{Binding FullName}" />
