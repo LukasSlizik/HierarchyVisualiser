@@ -1,10 +1,10 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using HierarchyVisualiser.ViewModels;
+using HierarchyVisualiser.Contracts;
 
 namespace HierarchyVisualiser.Behaviors
 {
-    public static class DragAndDropFileViewBehavior
+    public static class DragAndDropFileOnTreeViewBehavior
     {
         #region IsDraggableProperty
 
@@ -14,7 +14,7 @@ namespace HierarchyVisualiser.Behaviors
         public static readonly DependencyProperty CanFileBeDroppedProperty = DependencyProperty.RegisterAttached(
                                                                                                     "CanFileBeDropped",
                                                                                                     typeof(bool),
-                                                                                                    typeof(DragAndDropFileViewBehavior),
+                                                                                                    typeof(DragAndDropFileOnTreeViewBehavior),
                                                                                                     new PropertyMetadata(false, OnCanFileBeDropped));
 
         public static bool GetCanFileBeDropped(TreeView el)

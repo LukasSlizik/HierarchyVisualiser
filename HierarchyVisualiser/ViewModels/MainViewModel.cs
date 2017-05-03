@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Reflection;
+using HierarchyVisualiser.Contracts;
 
 namespace HierarchyVisualiser.ViewModels
 {

@@ -1,4 +1,4 @@
-﻿namespace HierarchyVisualiser.ViewModels
+﻿namespace HierarchyVisualiser.Contracts
 {
     /// <summary>
     /// Loads the assembly from file.

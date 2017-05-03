@@ -25,7 +25,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <TreeView ItemsSource="{Binding Assemblies}" Grid.Column="0" BorderThickness="0" behaviors:DragAndDropFileViewBehavior.CanFileBeDropped= "True">
+        <TreeView ItemsSource="{Binding Assemblies}" Grid.Column="0" BorderThickness="0" behaviors:DragAndDropFileOnTreeViewBehavior.CanFileBeDropped= "True">
             <TreeView.Resources>
                 <HierarchicalDataTemplate DataType="{x:Type viewModels:AssemblyViewModel}" ItemsSource="{Binding Namespaces}">
                     <TextBlock Text="{Binding FullName}" />
