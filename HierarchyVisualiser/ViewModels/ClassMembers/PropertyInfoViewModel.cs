@@ -9,12 +9,10 @@ namespace HierarchyVisualiser.ViewModels.ClassMembers
     {
         private PropertyInfo _pi;
 
-        public PropertyInfoViewModel(PropertyInfo pi) : this()
+        public PropertyInfoViewModel(PropertyInfo pi)
         {
             _pi = pi;
         }
-
-        public PropertyInfoViewModel() { }
 
         public string Name => _pi.Name;
 

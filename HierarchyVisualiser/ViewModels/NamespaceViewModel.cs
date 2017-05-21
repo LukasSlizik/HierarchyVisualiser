@@ -75,12 +75,9 @@ namespace HierarchyVisualiser.ViewModels
             
             foreach(var t in exportedTypes)
             {
-                var propInfos = t.GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance);
-                var methodInfos = t.GetMethods(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance).Where(m => !m.IsSpecialName);
-                var testClass = new ClassViewModel(t.Name, propInfos.Select(pi => new PropertyInfoViewModel(pi)), methodInfos.Select(mi => new MethodInfoViewModel(mi)));
-
-                testClass.SelectionChanged += OnSelectionChanged;
-                Classes.Add(testClass);
+                var c = new ClassViewModel(t);
+                c.SelectionChanged += OnSelectionChanged;
+                Classes.Add(c);
             }
         }
     }

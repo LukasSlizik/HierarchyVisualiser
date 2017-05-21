@@ -42,11 +42,13 @@
                 <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
+                <RowDefinition/>
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Row="0" Text="{Binding ClassName}" Margin="5"  />
-            <ListBox Grid.Row="1" ItemsSource="{Binding Properties}" BorderThickness="0 1 0 0" Margin="5" ItemTemplate="{StaticResource ClassMemberTemplate}"  />
-            <ListBox Grid.Row="2" ItemsSource="{Binding Methods}" BorderThickness="0 1 0 0" Margin="5" ItemTemplate="{StaticResource ClassMemberTemplate}" />
+            <ListBox Grid.Row="1" ItemsSource="{Binding Ctors}" BorderThickness="0 1 0 0" Margin="5" ItemTemplate="{StaticResource ClassMemberTemplate}"  />
+            <ListBox Grid.Row="2" ItemsSource="{Binding Properties}" BorderThickness="0 1 0 0" Margin="5" ItemTemplate="{StaticResource ClassMemberTemplate}"  />
+            <ListBox Grid.Row="3" ItemsSource="{Binding Methods}" BorderThickness="0 1 0 0" Margin="5" ItemTemplate="{StaticResource ClassMemberTemplate}" />
         </Grid>
     </Border>
 

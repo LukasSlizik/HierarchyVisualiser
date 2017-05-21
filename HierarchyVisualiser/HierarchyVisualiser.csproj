@@ -61,6 +61,7 @@
     <Compile Include="ViewModels\AssemblyViewModel.cs" />
     <Compile Include="ViewModels\ClassMembers\ClassMemberViewModel.cs" />
     <Compile Include="MemberType.cs" />
+    <Compile Include="ViewModels\ClassMembers\ConstructorInfoViewModel.cs" />
     <Compile Include="ViewModels\ClassMembers\MethodInfoViewModel.cs" />
     <Compile Include="Contracts\IAssemblyFileLoader.cs" />
     <Compile Include="ViewModels\NamespaceViewModel.cs" />
