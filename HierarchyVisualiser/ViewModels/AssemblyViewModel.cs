@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using System;
+using HierarchyVisualiser.Commands;
 
 namespace HierarchyVisualiser.ViewModels
 {
@@ -12,14 +13,41 @@ namespace HierarchyVisualiser.ViewModels
     {
         private Assembly _wrapeedAssembly;
         private ObservableCollection<NamespaceViewModel> _namespaces;
+        public event EventHandler AssemblyRemoved;
         public event EventHandler SelectionChanged;
 
         public AssemblyViewModel(Assembly assembly)
         {
             WrappedAssembly = assembly;
             PopulateNamespaces();
+
+            RegisterCommands();
         }
 
+        /// <summary>
+        /// Command for removing the assembly from the navigation tree.
+        /// </summary>
+        public RelayCommand RemoveCommand { get; set; }
+
+        /// <summary>
+        /// Register all Commands.
+        /// </summary>
+        private void RegisterCommands()
+        {
+            RemoveCommand = new RelayCommand(OnRemoveAssemblyExecute);
+        }
+
+        /// <summary>
+        /// Can assembly be removed from the navigation ?
+        /// </summary>
+        private void OnRemoveAssemblyExecute()
+        {
+            AssemblyRemoved?.Invoke(this, null);
+        }
+
+        /// <summary>
+        /// Assembly is selected or deselected.
+        /// </summary>
         private void OnSelectionChanged(object sender, EventArgs args)
         {
             SelectionChanged?.Invoke(sender, null);

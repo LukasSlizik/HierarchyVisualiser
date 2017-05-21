@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:viewModels="clr-namespace:HierarchyVisualiser.ViewModels"
              xmlns:views="clr-namespace:HierarchyVisualiser.Views"
+             xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:behaviors="clr-namespace:HierarchyVisualiser.Behaviors"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
@@ -25,7 +26,19 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <TreeView ItemsSource="{Binding Assemblies}" Grid.Column="0" BorderThickness="0" behaviors:DragAndDropFileOnTreeViewBehavior.CanFileBeDropped= "True">
+        <TreeView ItemsSource="{Binding Assemblies}" Grid.Column="0" BorderThickness="0" behaviors:DragAndDropFileOnTreeViewBehavior.CanFileBeDropped="True">
+            <TreeView.ItemContainerStyle>
+                <Style TargetType="{x:Type TreeViewItem}">
+                    <Setter Property="ContextMenu">
+                        <Setter.Value>
+                            <ContextMenu StaysOpen="true">
+                                <MenuItem Header="Remove" Command="{Binding RemoveCommand}" />
+                            </ContextMenu>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </TreeView.ItemContainerStyle>
+
             <TreeView.Resources>
                 <HierarchicalDataTemplate DataType="{x:Type viewModels:AssemblyViewModel}" ItemsSource="{Binding Namespaces}">
                     <TextBlock Text="{Binding FullName}" />
@@ -54,3 +67,4 @@
     </Grid>
 
 </UserControl>
+    

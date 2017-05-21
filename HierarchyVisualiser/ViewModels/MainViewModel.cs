@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Reflection;
 using HierarchyVisualiser.Contracts;
+using HierarchyVisualiser.Commands;
 
 namespace HierarchyVisualiser.ViewModels
 {
@@ -10,32 +11,34 @@ namespace HierarchyVisualiser.ViewModels
     /// </summary>
     internal class MainViewModel : ViewModelBase, IAssemblyFileLoader
     {
-        private ObservableCollection<AssemblyViewModel> _assemblies;
+        private ObservableCollection<AssemblyViewModel> _assemblies = new ObservableCollection<AssemblyViewModel>();
         private ObservableCollection<ClassViewModel> _selectedClasses;
 
         public MainViewModel()
         {
             SelectedClasses = new ObservableCollection<ClassViewModel>();
 
-            PopulateAssemblies();
-        }
-
-        private void PopulateAssemblies()
-        {
-            var ass1 = Assembly.LoadFile(@"C:\Users\Lukas\Source\Repos\HierarchyVisualiser\HierarchyVisualiser\bin\Debug\TestLibrary1.dll");
-            var ass2 = Assembly.LoadFile(@"C:\Users\Lukas\Source\Repos\HierarchyVisualiser\HierarchyVisualiser\bin\Debug\TestLibrary2.dll");
-
-            Assemblies = new ObservableCollection<AssemblyViewModel>(new AssemblyViewModel[] { new AssemblyViewModel(ass1), new AssemblyViewModel(ass2) });
             RegisterEventHandlersOnAssemblies();
         }
 
+        /// <summary>
+        /// EventHandlers for assemblies are registered.
+        /// </summary>
         private void RegisterEventHandlersOnAssemblies()
         {
             foreach (var assembly in Assemblies)
             {
                 assembly.SelectionChanged -= OnSelectionChanged;
                 assembly.SelectionChanged += OnSelectionChanged;
+
+                assembly.AssemblyRemoved -= OnAssemblyRemoved;
+                assembly.AssemblyRemoved += OnAssemblyRemoved;
             }
+        }
+
+        private void OnAssemblyRemoved(object sender, EventArgs args)
+        {
+            Assemblies.Remove((AssemblyViewModel)sender);
         }
 
         private void OnSelectionChanged(object sender, EventArgs args)
@@ -63,10 +66,18 @@ namespace HierarchyVisualiser.ViewModels
 
         public void LoadAssemblyFromFile(string file)
         {
-            var a = Assembly.LoadFile(file);
-            var vm = new AssemblyViewModel(a);
-            Assemblies.Add(new AssemblyViewModel(a));
-            RegisterEventHandlersOnAssemblies();
+            try
+            {
+                var a = Assembly.LoadFile(file);
+                var vm = new AssemblyViewModel(a);
+                Assemblies.Add(new AssemblyViewModel(a));
+                RegisterEventHandlersOnAssemblies();
+            }
+            catch (Exception ex)
+            {
+                // todo: Log Exception
+            }
+
         }
 
         /// <summary>
