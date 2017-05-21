@@ -1,8 +1,7 @@
-﻿using System;
+﻿using HierarchyVisualiser.Contracts;
+using System;
 using System.Collections.ObjectModel;
 using System.Reflection;
-using HierarchyVisualiser.Contracts;
-using HierarchyVisualiser.Commands;
 
 namespace HierarchyVisualiser.ViewModels
 {
