@@ -16,8 +16,9 @@ namespace HierarchyVisualiser.ViewModels
         public MainViewModel()
         {
             SelectedClasses = new ObservableCollection<ClassViewModel>();
-
             RegisterEventHandlersOnAssemblies();
+
+            TryLoadAssemblyFromFile(@"C:\Users\Lukas\Desktop\nblackbox.dll");
         }
 
         /// <summary>

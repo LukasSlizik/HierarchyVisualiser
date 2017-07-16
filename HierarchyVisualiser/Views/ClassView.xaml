@@ -20,7 +20,7 @@
                     </Grid.ColumnDefinitions>
                     <Image Source="..\Icons\method.png" Grid.Column="0" x:Name="methodIcon"/>
                     <Image Source="..\Icons\property.jpg" Grid.Column="0" x:Name="propertyIcon" />
-                    <TextBlock Text="{Binding Name}" Grid.Column="1"/>
+                    <TextBlock Text="{Binding Info}" Grid.Column="1"/>
                 </Grid>
                 <DataTemplate.Triggers>
                     <DataTrigger Binding="{Binding MemberType}" Value="Method">
@@ -33,23 +33,103 @@
                     </DataTrigger>
                 </DataTemplate.Triggers>
             </DataTemplate>
+
+            <ControlTemplate x:Key="CustomToggleButton" TargetType="{x:Type ToggleButton}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="100"/>
+                    </Grid.ColumnDefinitions>
+                    <Ellipse Name="Circle"
+                             ClipToBounds="True"
+                             Grid.Column="0"
+                             Fill="Transparent"
+                             Stroke="Transparent"
+                             Width="20"
+                             Height="20"
+                             VerticalAlignment="Top"/>
+                    <Path x:Name="Arrow" 
+                          Stroke="DarkGray" 
+                          Fill="DarkGray"
+                          VerticalAlignment="Top"
+                          StrokeThickness="1" 
+                          Grid.Column="0" 
+                          Data="M 12,5 L 6,10 L 12,15 Z"></Path>
+                    <ContentPresenter x:Name="HeaderContent" Grid.Column="1" Margin="5 0 5 0" ContentSource="Content" />
+                </Grid>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsChecked" Value="True">
+                        <Setter Property="Data" TargetName="Arrow" Value="M 8,5 L 14,10 L 8,15 Z"/>
+                    </Trigger>
+                    <Trigger Property="IsMouseOver" Value="true">
+                        <Setter Property="Fill" Value="WhiteSmoke"  TargetName="Circle"/>
+                        <Setter Property="StrokeThickness" Value="1.5" TargetName="Circle"/>
+                    </Trigger>
+                    <Trigger Property="IsPressed" Value="true">
+                        <Setter Property="StrokeThickness" Value="2" TargetName="Circle"/>
+                        <Setter Property="Fill" Value="Black" TargetName="Arrow"/>
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+
+            <ControlTemplate x:Key="CustomExpander" TargetType="{x:Type Expander}">
+                <DockPanel>
+                    <ToggleButton x:Name="ExpanderButton" 
+                                  DockPanel.Dock="Left" 
+                                  Margin="5 10 5 10"
+                                  Background="{TemplateBinding Background}"
+                                  Content="{TemplateBinding Header}"
+                                  Template="{StaticResource CustomToggleButton}"
+                                  IsChecked="{Binding Path=IsExpanded, RelativeSource={RelativeSource TemplatedParent}}"
+                                  BorderBrush="{TemplateBinding BorderBrush}" 
+                                  BorderThickness="{TemplateBinding BorderThickness}" 
+                                  VerticalContentAlignment="Top">
+                    </ToggleButton>
+                    <ContentPresenter Grid.Column="2" x:Name="ExpanderContent" DockPanel.Dock="Right" Visibility="Collapsed" ContentSource="Content"/>
+                </DockPanel>
+                <ControlTemplate.Triggers>
+                    <Trigger Property="IsExpanded" Value="True">
+                        <Setter TargetName="ExpanderContent" Property="Visibility" Value="Visible" />
+                    </Trigger>
+                </ControlTemplate.Triggers>
+            </ControlTemplate>
+
+            <CollectionViewSource x:Key="Members" Source="{Binding Members}" >
+                <CollectionViewSource.GroupDescriptions>
+                    <PropertyGroupDescription PropertyName="MemberType" />
+                </CollectionViewSource.GroupDescriptions>
+            </CollectionViewSource>
+
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Border BorderBrush="Black" BorderThickness="2" CornerRadius="5">
+    <Border BorderBrush="DarkGray" BorderThickness="2" CornerRadius="5">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Row="0" Text="{Binding ClassName}" Margin="5"  />
-            <ListBox Grid.Row="1" ItemsSource="{Binding Ctors}" BorderThickness="0 1 0 0" Margin="5" ItemTemplate="{StaticResource ClassMemberTemplate}"  />
-            <ListBox Grid.Row="2" ItemsSource="{Binding Properties}" BorderThickness="0 1 0 0" Margin="5" ItemTemplate="{StaticResource ClassMemberTemplate}"  />
-            <ListBox Grid.Row="3" ItemsSource="{Binding Methods}" BorderThickness="0 1 0 0" Margin="5" ItemTemplate="{StaticResource ClassMemberTemplate}" />
+            <ItemsControl Grid.Row="1" ItemsSource="{Binding Source={StaticResource Members}}"  >
+                <ItemsControl.GroupStyle>
+                    <GroupStyle>
+                        <GroupStyle.ContainerStyle>
+                            <Style TargetType="{x:Type GroupItem}">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="{x:Type GroupItem}">
+                                            <Expander Grid.Row="2" Header="{Binding Name}" Template="{StaticResource CustomExpander}">
+                                                <ListBox ItemsSource="{Binding Items}" BorderThickness="0 1 0 0" Margin="5" ItemTemplate="{StaticResource ClassMemberTemplate}"  />
+                                            </Expander>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </GroupStyle.ContainerStyle>
+                    </GroupStyle>
+                </ItemsControl.GroupStyle>
+            </ItemsControl>
         </Grid>
     </Border>
-
-</UserControl>
+</UserControl> 

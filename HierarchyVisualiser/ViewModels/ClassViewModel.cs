@@ -1,20 +1,28 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using HierarchyVisualiser.ViewModels.ClassMembers;
-using System.Reflection;
-using System.Linq;
+﻿using HierarchyVisualiser.ViewModels.ClassMembers;
 using System;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Reflection;
+using System.Collections.Generic;
 
 namespace HierarchyVisualiser.ViewModels
 {
+
+    public static class Extensions
+    {
+        public static void AddRange<T>(this ObservableCollection<T> collection, IEnumerable<T> items)
+        {
+            foreach (var i in items)
+                collection.Add(i);
+        }
+    }
+
     /// <summary>
     /// Represents a Class, identiefied by its Name, as a Collection of Class Members (Methods, Events, Constructors, Properties).
     /// </summary>
     internal class ClassViewModel : ViewModelBase
     {
-        private ObservableCollection<MethodInfoViewModel> _methods = new ObservableCollection<MethodInfoViewModel>();
-        private ObservableCollection<PropertyInfoViewModel> _properties = new ObservableCollection<PropertyInfoViewModel>();
-        private ObservableCollection<ConstructorInfoViewModel> _ctors = new ObservableCollection<ConstructorInfoViewModel>();
+        private ObservableCollection<ClassMemberViewModel> _members = new ObservableCollection<ClassMemberViewModel>();
         private Type _wrappedType;
         private bool _isSelected;
         private string _className;
@@ -49,18 +57,21 @@ namespace HierarchyVisualiser.ViewModels
         }
 
         /// <summary>
-        /// Initialize the Collection of all Classes contained within this Namespace.
+        /// Populates this instance with its class members.
         /// </summary>
         private void PopulateWithClassMembers()
         {
-            var ctors = ((TypeInfo)_wrappedType).DeclaredConstructors;
-            Ctors = new ObservableCollection<ConstructorInfoViewModel>(ctors.Select(ci => new ConstructorInfoViewModel(ci)));
+            var eventInfo = _wrappedType.GetEvents(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance);
+            Members.AddRange(eventInfo.Select(ei => new ClassMemberViewModel(ei, MemberType.Event)));
 
-            var propInfos = _wrappedType.GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance);
-            Properties = new ObservableCollection<PropertyInfoViewModel>(propInfos.Select(pi => new PropertyInfoViewModel(pi)));
+            var methodInfo = _wrappedType.GetMethods(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance).Where(m => !m.IsSpecialName);
+            Members.AddRange(methodInfo.Select(mi => new ClassMemberViewModel(mi, MemberType.Method)));
 
-            var methodInfos = _wrappedType.GetMethods(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance).Where(m => !m.IsSpecialName);
-            Methods = new ObservableCollection<MethodInfoViewModel>(methodInfos.Select(mi => new MethodInfoViewModel(mi)));
+            var propInfo = _wrappedType.GetProperties(BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance);
+            Members.AddRange(propInfo.Select(pi => new ClassMemberViewModel(pi, MemberType.Property)));
+
+            var ctors = ((TypeInfo)_wrappedType).DeclaredConstructors.Cast<ConstructorInfo>();
+            Members.AddRange(ctors.Select(ci => new ClassMemberViewModel(ci, MemberType.Constructor)));
         }
 
         /// <summary>
@@ -81,59 +92,23 @@ namespace HierarchyVisualiser.ViewModels
             }
         }
 
+        //public ObservableCollection<ObservableCollection<ClassMemberViewModel>> Members => new ObservableCollection<ObservableCollection<ClassMemberViewModel>>() { Ctors, Properties, Methods, Events };
+
         /// <summary>
         /// Collection of Class Properties.
         /// </summary>
-        public ObservableCollection<PropertyInfoViewModel> Properties
+        public ObservableCollection<ClassMemberViewModel> Members
         {
             get
             {
-                return _properties;
+                return _members;
             }
             set
             {
-                if (_properties == value)
+                if (_members == value)
                     return;
 
-                _properties = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        /// <summary>
-        /// Collection of Class Methods.
-        /// </summary>
-        public ObservableCollection<MethodInfoViewModel> Methods
-        {
-            get
-            {
-                return _methods;
-            }
-            set
-            {
-                if (_methods == value)
-                    return;
-
-                _methods = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        /// <summary>
-        /// Collection of Class Constructors.
-        /// </summary>
-        public ObservableCollection<ConstructorInfoViewModel> Ctors
-        {
-            get
-            {
-                return _ctors;
-            }
-            set
-            {
-                if (_ctors == value)
-                    return;
-
-                _ctors = value;
+                _members = value;
                 RaisePropertyChanged();
             }
         }
