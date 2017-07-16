@@ -4,19 +4,10 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
 using System.Collections.Generic;
+using HierarchyVisualiser.Helpers;
 
 namespace HierarchyVisualiser.ViewModels
 {
-
-    public static class Extensions
-    {
-        public static void AddRange<T>(this ObservableCollection<T> collection, IEnumerable<T> items)
-        {
-            foreach (var i in items)
-                collection.Add(i);
-        }
-    }
-
     /// <summary>
     /// Represents a Class, identiefied by its Name, as a Collection of Class Members (Methods, Events, Constructors, Properties).
     /// </summary>
