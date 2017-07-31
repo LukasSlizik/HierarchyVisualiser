@@ -104,6 +104,11 @@
     </UserControl.Resources>
 
     <Border BorderBrush="DarkGray" BorderThickness="2" CornerRadius="5">
+        <Border.ContextMenu>
+            <ContextMenu StaysOpen="true">
+                <MenuItem Header="Show Base" Command="{Binding ShowBaseCommand}" />
+            </ContextMenu>
+        </Border.ContextMenu>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition/>
@@ -111,7 +116,7 @@
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Row="0" Text="{Binding ClassName}" Margin="5"  />
-            <ItemsControl Grid.Row="1" ItemsSource="{Binding Source={StaticResource Members}}"  >
+            <ItemsControl Grid.Row="1" ItemsSource="{Binding Source={StaticResource Members}}" >
                 <ItemsControl.GroupStyle>
                     <GroupStyle>
                         <GroupStyle.ContainerStyle>

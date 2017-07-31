@@ -64,12 +64,28 @@ namespace HierarchyVisualiser.ViewModels
             return true;
         }
 
+        public void Update()
+        {
+            var cvm = subject as ClassViewModel;
+            if (cvm != null)
+            {
+                var baseType = cvm.WrappedType.BaseType;
+                
+                // if cvm is already Object, then there is no base type
+                if (baseType != null)
+                {
+                    var newCvm = new ClassViewModel(baseType);
+                    newCvm.Attach(this);
+                    SelectedClasses.Add(newCvm);
+                }
+            }
+        }
+
         public void LoadAssemblyFromFile(string file)
         {
             try
             {
                 var a = Assembly.LoadFile(file);
-                var vm = new AssemblyViewModel(a);
                 Assemblies.Add(new AssemblyViewModel(a));
                 RegisterEventHandlersOnAssemblies();
             }
