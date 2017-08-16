@@ -22,21 +22,8 @@ namespace HierarchyVisualiser.ViewModels
         {
             WrappedType = t;
             ClassName = t.Name;
-
-            RegisterCommands();
             PopulateWithClassMembers();
         }
-
-        private void RegisterCommands()
-        {
-            ShowBaseCommand = new RelayCommand(OnShowBaseCommandExecute);
-        }
-
-        private void OnShowBaseCommandExecute()
-        {
-        }
-
-        public RelayCommand ShowBaseCommand { get; set; }
 
         /// <summary>
         /// Gets or sets if the Class was selected in the Navigation Tree.

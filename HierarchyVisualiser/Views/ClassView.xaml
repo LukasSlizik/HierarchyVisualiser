@@ -103,10 +103,10 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Border BorderBrush="DarkGray" BorderThickness="2" CornerRadius="5">
+    <Border BorderBrush="DarkGray" BorderThickness="2" CornerRadius="5" Tag="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}">
         <Border.ContextMenu>
             <ContextMenu StaysOpen="true">
-                <MenuItem Header="Show Base" Command="{Binding ShowBaseCommand}" />
+                <MenuItem Header="Show Base" Command="{Binding PlacementTarget.Tag.ShowBaseCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}" CommandParameter="{Binding WrappedType}"/>
             </ContextMenu>
         </Border.ContextMenu>
         <Grid>

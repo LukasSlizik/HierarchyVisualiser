@@ -1,4 +1,5 @@
-﻿using HierarchyVisualiser.Contracts;
+﻿using HierarchyVisualiser.Commands;
+using HierarchyVisualiser.Contracts;
 using System;
 using System.Collections.ObjectModel;
 using System.Reflection;
@@ -17,6 +18,7 @@ namespace HierarchyVisualiser.ViewModels
         {
             SelectedClasses = new ObservableCollection<ClassViewModel>();
             RegisterEventHandlersOnAssemblies();
+            RegistCommands();
 
             TryLoadAssemblyFromFile(@"C:\Users\Lukas\Desktop\nblackbox.dll");
         }
@@ -64,18 +66,24 @@ namespace HierarchyVisualiser.ViewModels
             return true;
         }
 
-        public void Update()
+        public GenericRelayCommand<Type> ShowBaseCommand { get; set; }
+
+        private void RegistCommands()
         {
-            var cvm = subject as ClassViewModel;
-            if (cvm != null)
+            ShowBaseCommand = new GenericRelayCommand<Type>(OnShowBaseCommandExecute);
+        }
+
+        private void OnShowBaseCommandExecute(Type t)
+        {
+            if (t == null)
+                throw new ArgumentNullException(nameof(t));
             {
-                var baseType = cvm.WrappedType.BaseType;
-                
-                // if cvm is already Object, then there is no base type
+                var baseType = t.BaseType;
+
+                // if t is already object, then there is no base type
                 if (baseType != null)
                 {
                     var newCvm = new ClassViewModel(baseType);
-                    newCvm.Attach(this);
                     SelectedClasses.Add(newCvm);
                 }
             }
