@@ -103,38 +103,44 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Border BorderBrush="DarkGray" BorderThickness="2" CornerRadius="5" Tag="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}">
-        <Border.ContextMenu>
-            <ContextMenu StaysOpen="true">
-                <MenuItem Header="Show Base" Command="{Binding PlacementTarget.Tag.ShowBaseCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}" CommandParameter="{Binding WrappedType}"/>
-            </ContextMenu>
-        </Border.ContextMenu>
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
+    <Thumb DragDelta="OnDragDelta">
+        <Thumb.Template>
+            <ControlTemplate>
+                <Border BorderBrush="DarkGray" BorderThickness="2" CornerRadius="5" Tag="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}">
+                    <Border.ContextMenu>
+                        <ContextMenu StaysOpen="true">
+                            <MenuItem Header="Show Base" Command="{Binding PlacementTarget.Tag.ShowBaseCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}" CommandParameter="{Binding WrappedType}"/>
+                        </ContextMenu>
+                    </Border.ContextMenu>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" Text="{Binding ClassName}" Margin="5"  />
-            <ItemsControl Grid.Row="1" ItemsSource="{Binding Source={StaticResource Members}}" >
-                <ItemsControl.GroupStyle>
-                    <GroupStyle>
-                        <GroupStyle.ContainerStyle>
-                            <Style TargetType="{x:Type GroupItem}">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="{x:Type GroupItem}">
-                                            <Expander Grid.Row="2" Header="{Binding Name}" Template="{StaticResource CustomExpander}">
-                                                <ListBox ItemsSource="{Binding Items}" BorderThickness="0 1 0 0" Margin="5" ItemTemplate="{StaticResource ClassMemberTemplate}"  />
-                                            </Expander>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </GroupStyle.ContainerStyle>
-                    </GroupStyle>
-                </ItemsControl.GroupStyle>
-            </ItemsControl>
-        </Grid>
-    </Border>
+                        <TextBlock Grid.Row="0" Text="{Binding ClassName}" Margin="5"  />
+                        <ItemsControl Grid.Row="1" ItemsSource="{Binding Source={StaticResource Members}}" >
+                            <ItemsControl.GroupStyle>
+                                <GroupStyle>
+                                    <GroupStyle.ContainerStyle>
+                                        <Style TargetType="{x:Type GroupItem}">
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type GroupItem}">
+                                                        <Expander Grid.Row="2" Header="{Binding Name}" Template="{StaticResource CustomExpander}">
+                                                            <ListBox ItemsSource="{Binding Items}" BorderThickness="0 1 0 0" Margin="5" ItemTemplate="{StaticResource ClassMemberTemplate}"  />
+                                                        </Expander>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </GroupStyle.ContainerStyle>
+                                </GroupStyle>
+                            </ItemsControl.GroupStyle>
+                        </ItemsControl>
+                    </Grid>
+                </Border>
+            </ControlTemplate>
+        </Thumb.Template>
+    </Thumb>
 </UserControl> 

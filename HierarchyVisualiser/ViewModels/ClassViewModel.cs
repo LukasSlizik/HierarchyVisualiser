@@ -1,10 +1,9 @@
-﻿using HierarchyVisualiser.ViewModels.ClassMembers;
+﻿using HierarchyVisualiser.Helpers;
+using HierarchyVisualiser.ViewModels.ClassMembers;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
-using HierarchyVisualiser.Helpers;
-using HierarchyVisualiser.Commands;
 
 namespace HierarchyVisualiser.ViewModels
 {
@@ -17,6 +16,8 @@ namespace HierarchyVisualiser.ViewModels
         private bool _isSelected;
         private string _className;
         internal event EventHandler SelectionChanged;
+        private double _yCoord;
+        private double _xCoord;
 
         public ClassViewModel(Type t)
         {
@@ -82,6 +83,33 @@ namespace HierarchyVisualiser.ViewModels
         }
 
         public Type WrappedType { get; }
+
+        /// <summary>
+        /// X Coordinate on the Canvas.
+        /// </summary>
+        public double Y
+        {
+            get { return _yCoord; }
+            set
+            {
+                _yCoord = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// X Coordinate on the Canvas.
+        /// </summary>
+        public double X
+        {
+            get { return _xCoord; }
+            set
+            {
+                _xCoord = value;
+                RaisePropertyChanged();
+            }
+        }
+
 
         /// <summary>
         /// Collection of Class Properties.
