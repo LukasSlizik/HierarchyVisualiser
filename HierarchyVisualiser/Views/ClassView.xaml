@@ -7,8 +7,7 @@
              xmlns:local="clr-namespace:HierarchyVisualiser.Views"
              xmlns:viewModels="clr-namespace:HierarchyVisualiser.ViewModels"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300"
-             behaviors:DragAndDropBehavior.CanBeDragged="True">
+             d:DesignHeight="300" d:DesignWidth="300">
 
     <UserControl.Resources>
         <ResourceDictionary>
