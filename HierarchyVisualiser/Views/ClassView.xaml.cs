@@ -1,7 +1,4 @@
-﻿using HierarchyVisualiser.ViewModels;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
+﻿using System.Windows.Controls;
 
 namespace HierarchyVisualiser.Views
 {
@@ -14,13 +11,5 @@ namespace HierarchyVisualiser.Views
         {
             InitializeComponent();
         }
-
-        public void OnDragDelta(object sender, DragDeltaEventArgs e)
-        {
-            var n = (ClassViewModel)((FrameworkElement)sender).DataContext;
-            n.X += e.HorizontalChange;
-            n.Y += e.VerticalChange;
-        }
-
     }
 }

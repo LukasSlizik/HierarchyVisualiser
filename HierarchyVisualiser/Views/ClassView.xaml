@@ -102,7 +102,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Thumb DragDelta="OnDragDelta">
+    <Thumb behaviors:ThumbDragBehavior.CanBeDragged="True">
         <Thumb.Template>
             <ControlTemplate>
                 <Border BorderBrush="DarkGray" BorderThickness="2" CornerRadius="5" Tag="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}">
