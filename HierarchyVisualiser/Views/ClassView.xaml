@@ -6,8 +6,10 @@
              xmlns:behaviors="clr-namespace:HierarchyVisualiser.Behaviors"
              xmlns:local="clr-namespace:HierarchyVisualiser.Views"
              xmlns:viewModels="clr-namespace:HierarchyVisualiser.ViewModels"
+             xmlns:controls="clr-namespace:HierarchyVisualiser.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300"
+             Loaded="Window_Loaded">
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -102,44 +104,54 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <Thumb behaviors:ThumbDragBehavior.CanBeDragged="True">
-        <Thumb.Template>
+    <controls:MyThumb behaviors:ThumbDragBehavior.ThumbCanBeDragged="True">
+        <controls:MyThumb.Template>
             <ControlTemplate>
-                <Border BorderBrush="DarkGray" BorderThickness="2" CornerRadius="5" Tag="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}">
-                    <Border.ContextMenu>
-                        <ContextMenu StaysOpen="true">
-                            <MenuItem Header="Show Base" Command="{Binding PlacementTarget.Tag.ShowBaseCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}" CommandParameter="{Binding WrappedType}"/>
-                        </ContextMenu>
-                    </Border.ContextMenu>
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition/>
-                            <RowDefinition/>
-                        </Grid.RowDefinitions>
+                <Canvas>
+                    <Path x:Name="Arrow" 
+                          Stroke="DarkGray" 
+                          Fill="DarkGray"
+                          VerticalAlignment="Top"
+                          StrokeThickness="1" 
+                          Grid.Column="0" 
+                          Data="{Binding Connection}">
+                    </Path>
+                    <Border BorderBrush="DarkGray" BorderThickness="2" CornerRadius="5" Tag="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}">
+                        <Border.ContextMenu>
+                            <ContextMenu StaysOpen="true">
+                                <MenuItem Header="Show Base" Command="{Binding PlacementTarget.Tag.ShowBaseCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}" CommandParameter="{Binding WrappedType}"/>
+                            </ContextMenu>
+                        </Border.ContextMenu>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
 
-                        <TextBlock Grid.Row="0" Text="{Binding ClassName}" Margin="5"  />
-                        <ItemsControl Grid.Row="1" ItemsSource="{Binding Source={StaticResource Members}}" >
-                            <ItemsControl.GroupStyle>
-                                <GroupStyle>
-                                    <GroupStyle.ContainerStyle>
-                                        <Style TargetType="{x:Type GroupItem}">
-                                            <Setter Property="Template">
-                                                <Setter.Value>
-                                                    <ControlTemplate TargetType="{x:Type GroupItem}">
-                                                        <Expander Grid.Row="2" Header="{Binding Name}" Template="{StaticResource CustomExpander}">
-                                                            <ListBox ItemsSource="{Binding Items}" BorderThickness="0 1 0 0" Margin="5" ItemTemplate="{StaticResource ClassMemberTemplate}"  />
-                                                        </Expander>
-                                                    </ControlTemplate>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Style>
-                                    </GroupStyle.ContainerStyle>
-                                </GroupStyle>
-                            </ItemsControl.GroupStyle>
-                        </ItemsControl>
-                    </Grid>
-                </Border>
+                            <TextBlock Grid.Row="0" Text="{Binding ClassName}" Margin="5"  />
+                            <ItemsControl Grid.Row="1" ItemsSource="{Binding Source={StaticResource Members}}" >
+                                <ItemsControl.GroupStyle>
+                                    <GroupStyle>
+                                        <GroupStyle.ContainerStyle>
+                                            <Style TargetType="{x:Type GroupItem}">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type GroupItem}">
+                                                            <Expander Grid.Row="2" Header="{Binding Name}" Template="{StaticResource CustomExpander}">
+                                                                <ListBox ItemsSource="{Binding Items}" BorderThickness="0 1 0 0" Margin="5" ItemTemplate="{StaticResource ClassMemberTemplate}"  />
+                                                            </Expander>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </GroupStyle.ContainerStyle>
+                                    </GroupStyle>
+                                </ItemsControl.GroupStyle>
+                            </ItemsControl>
+                        </Grid>
+                    </Border>
+                </Canvas>
             </ControlTemplate>
-        </Thumb.Template>
-    </Thumb>
+        </controls:MyThumb.Template>
+    </controls:MyThumb>
 </UserControl> 

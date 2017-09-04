@@ -18,11 +18,14 @@ namespace HierarchyVisualiser.ViewModels
         internal event EventHandler SelectionChanged;
         private double _yCoord;
         private double _xCoord;
+        private string _connection;
 
         public ClassViewModel(Type t)
         {
             WrappedType = t;
             ClassName = t.Name;
+
+            Connection = string.Empty;
             PopulateWithClassMembers();
         }
 
@@ -110,6 +113,15 @@ namespace HierarchyVisualiser.ViewModels
             }
         }
 
+        public string Connection
+        {
+            get { return _connection; }
+            set
+            {
+                _connection = value;
+                RaisePropertyChanged();
+            }
+        }
 
         /// <summary>
         /// Collection of Class Properties.
