@@ -19,15 +19,28 @@ namespace HierarchyVisualiser.Views
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            // ActualWidth and Height are 0.0 -> not loaded yet
+            //https://stackoverflow.com/questions/1695101/why-are-actualwidth-and-actualheight-0-0-in-this-case
+
             var path1 = new Path();
             path1.Stroke = Brushes.Black;
             path1.StrokeThickness = 1;
 
+            var classView = (ClassView)sender;
             var ctx = (ClassViewModel)((ClassView)sender).DataContext;
-            ctx.Connection = "M 250,0 L 250,100";
+            var left = ctx.X;
+            var top = ctx.Y;
 
-            double left = Canvas.GetLeft(this);
-            double top = Canvas.GetTop(this);
+            var right = left + classView.ActualWidth;
+            var bottom = top + classView.ActualHeight;
+
+            var startX = (left + right) / 2;
+            var startY = top;
+
+            var endX = startX;
+            var endY = endX - 100;
+
+            ctx.Connection = $"M {startX},{startY} L{endX},{endY}";
 
             //myCanvas.Children.Add(path1);
 
