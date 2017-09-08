@@ -17,6 +17,7 @@ namespace HierarchyVisualiser.Views
             InitializeComponent();
         }
 
+        // Todo: remove from the code behind
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             // ActualWidth and Height are 0.0 -> not loaded yet
@@ -39,8 +40,6 @@ namespace HierarchyVisualiser.Views
 
             var endX = startX;
             var endY = endX - 100;
-
-            ctx.Connection = $"M {startX},{startY} L{endX},{endY}";
 
             //myCanvas.Children.Add(path1);
 

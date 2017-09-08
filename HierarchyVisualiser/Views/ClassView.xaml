@@ -7,6 +7,7 @@
              xmlns:local="clr-namespace:HierarchyVisualiser.Views"
              xmlns:viewModels="clr-namespace:HierarchyVisualiser.ViewModels"
              xmlns:controls="clr-namespace:HierarchyVisualiser.Controls"
+             xmlns:converters="clr-namespace:HierarchyVisualiser.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              Loaded="Window_Loaded">
@@ -101,21 +102,31 @@
                 </CollectionViewSource.GroupDescriptions>
             </CollectionViewSource>
 
+            <converters:ConnectionConverter x:Key="ConnectionConverter" />
+
         </ResourceDictionary>
     </UserControl.Resources>
 
     <controls:MyThumb behaviors:ThumbDragBehavior.ThumbCanBeDragged="True">
         <controls:MyThumb.Template>
             <ControlTemplate>
-                <Canvas>
+                <Grid>
                     <Path x:Name="Arrow" 
                           Stroke="DarkGray" 
                           Fill="DarkGray"
                           VerticalAlignment="Top"
-                          StrokeThickness="1" 
-                          Grid.Column="0" 
-                          Data="{Binding Connection}">
+                          StrokeThickness="1"
+                          Grid.Column="0">
+                        <Path.Data>
+                            <MultiBinding Converter="{StaticResource ConnectionConverter}">
+                                <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Grid}}" Path="ActualWidth"/>
+                                <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Grid}}" Path="ActualHeight"/>
+                                <Binding RelativeSource="{RelativeSource Self}" Path="DataContext.X" />
+                                <Binding RelativeSource="{RelativeSource Self}" Path="DataContext.Y" />
+                            </MultiBinding>
+                        </Path.Data>
                     </Path>
+
                     <Border BorderBrush="DarkGray" BorderThickness="2" CornerRadius="5" Tag="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}">
                         <Border.ContextMenu>
                             <ContextMenu StaysOpen="true">
@@ -150,7 +161,7 @@
                             </ItemsControl>
                         </Grid>
                     </Border>
-                </Canvas>
+                </Grid>
             </ControlTemplate>
         </controls:MyThumb.Template>
     </controls:MyThumb>

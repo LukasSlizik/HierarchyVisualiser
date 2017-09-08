@@ -60,6 +60,7 @@
     <Compile Include="Commands\GenericRelayCommand.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="Controls\MyThumb.cs" />
+    <Compile Include="Converters\ConnectionConverter.cs" />
     <Compile Include="Helpers\Extensions.cs" />
     <Compile Include="ViewModels\AssemblyViewModel.cs" />
     <Compile Include="ViewModels\ClassMembers\ClassMemberViewModel.cs" />

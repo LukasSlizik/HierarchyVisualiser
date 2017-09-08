@@ -25,7 +25,6 @@ namespace HierarchyVisualiser.ViewModels
             WrappedType = t;
             ClassName = t.Name;
 
-            Connection = string.Empty;
             PopulateWithClassMembers();
         }
 
@@ -109,16 +108,6 @@ namespace HierarchyVisualiser.ViewModels
             set
             {
                 _xCoord = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public string Connection
-        {
-            get { return _connection; }
-            set
-            {
-                _connection = value;
                 RaisePropertyChanged();
             }
         }
