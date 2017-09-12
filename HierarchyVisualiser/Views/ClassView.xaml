@@ -101,9 +101,6 @@
                     <PropertyGroupDescription PropertyName="MemberType" />
                 </CollectionViewSource.GroupDescriptions>
             </CollectionViewSource>
-
-            <converters:ConnectionConverter x:Key="ConnectionConverter" />
-
         </ResourceDictionary>
     </UserControl.Resources>
 
@@ -111,12 +108,18 @@
         <controls:MyThumb.Template>
             <ControlTemplate>
                 <Grid>
-                    <Path x:Name="Arrow" 
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <!--<Path x:Name="Arrow" 
                           Stroke="DarkGray" 
                           Fill="DarkGray"
                           VerticalAlignment="Top"
                           StrokeThickness="1"
-                          Grid.Column="0">
+                          Grid.Row="0">
                         <Path.Data>
                             <MultiBinding Converter="{StaticResource ConnectionConverter}">
                                 <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Grid}}" Path="ActualWidth"/>
@@ -125,9 +128,9 @@
                                 <Binding RelativeSource="{RelativeSource Self}" Path="DataContext.Y" />
                             </MultiBinding>
                         </Path.Data>
-                    </Path>
+                    </Path>-->
 
-                    <Border BorderBrush="DarkGray" BorderThickness="2" CornerRadius="5" Tag="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}">
+                    <Border BorderBrush="DarkGray" BorderThickness="2" CornerRadius="5" Tag="{Binding DataContext, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type local:MainView}}}" Grid.Row="1">
                         <Border.ContextMenu>
                             <ContextMenu StaysOpen="true">
                                 <MenuItem Header="Show Base" Command="{Binding PlacementTarget.Tag.ShowBaseCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}" CommandParameter="{Binding WrappedType}"/>

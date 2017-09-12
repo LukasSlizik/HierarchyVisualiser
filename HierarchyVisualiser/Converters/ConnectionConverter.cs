@@ -21,10 +21,11 @@ namespace HierarchyVisualiser.Converters
             var x = (double)values[2];
             var y = (double)values[3];
 
-            var linePositionX = (int)((x + width) / 2);
+            var linePositionX = (int)(x + (width / 2));
             var linePositionY = (int)y;
 
             return new LineGeometry(new System.Windows.Point(linePositionX, linePositionY), new System.Windows.Point(linePositionX, linePositionY - 100));
+            //return null;
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

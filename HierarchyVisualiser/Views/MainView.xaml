@@ -7,6 +7,7 @@
              xmlns:views="clr-namespace:HierarchyVisualiser.Views"
              xmlns:sys="clr-namespace:System;assembly=mscorlib"
              xmlns:behaviors="clr-namespace:HierarchyVisualiser.Behaviors"
+             xmlns:converters="clr-namespace:HierarchyVisualiser.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.DataContext>
@@ -17,6 +18,8 @@
         <DataTemplate DataType="{x:Type viewModels:ClassViewModel}">
             <views:ClassView/>
         </DataTemplate>
+
+        <converters:ConnectionConverter x:Key="ConnectionConverter" />
     </UserControl.Resources>
 
     <Grid>
@@ -70,7 +73,33 @@
                 </Style>
             </ItemsControl.ItemContainerStyle>
         </ItemsControl>
-    </Grid>
 
+        <ItemsControl Grid.Column="2" ItemsSource="{Binding SelectedClasses}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Canvas />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Path x:Name="Arrow" 
+                          Stroke="DarkGray" 
+                          Fill="DarkGray"
+                          VerticalAlignment="Top"
+                          StrokeThickness="1"
+                          Grid.Row="0">
+                        <Path.Data>
+                            <MultiBinding Converter="{StaticResource ConnectionConverter}">
+                                <Binding RelativeSource="{RelativeSource Self}" Path="ActualWidth"/>
+                                <Binding RelativeSource="{RelativeSource Self}" Path="ActualHeight"/>
+                                <Binding RelativeSource="{RelativeSource Self}" Path="DataContext.X" />
+                                <Binding RelativeSource="{RelativeSource Self}" Path="DataContext.Y" />
+                                <Binding RelativeSource="{RelativeSource Self}" />
+                            </MultiBinding>
+                        </Path.Data>
+                    </Path>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
 </UserControl>
-    
