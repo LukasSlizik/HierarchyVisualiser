@@ -20,6 +20,7 @@
         </DataTemplate>
 
         <converters:ClassViewPosition2ConnectionLineConverter x:Key="ClassViewPosition2ConnectionLineConverter" />
+        <converters:ClassPositionToMarginConverter x:Key="ClassPositionToMarginConverter" />
     </UserControl.Resources>
 
     <Grid>
@@ -63,13 +64,21 @@
         <ItemsControl Grid.Column="2" ItemsSource="{Binding SelectedClasses}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <Canvas />
+                    <Grid />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemContainerStyle>
-                <Style>
-                    <Setter Property="Canvas.Left" Value="{Binding X}" />
-                    <Setter Property="Canvas.Top" Value="{Binding Y}" />
+                <Style TargetType="ContentPresenter">
+                    <Setter Property="Margin">
+                        <Setter.Value>
+                            <MultiBinding Converter="{StaticResource ClassPositionToMarginConverter}">
+                                <Binding Path="X" />
+                                <Binding Path="Y" />
+                            </MultiBinding>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="HorizontalAlignment" Value="Left" />
+                    <Setter Property="VerticalAlignment" Value="Top" />
                 </Style>
             </ItemsControl.ItemContainerStyle>
         </ItemsControl>
@@ -86,8 +95,7 @@
                           Stroke="DarkGray" 
                           Fill="DarkGray"
                           VerticalAlignment="Top"
-                          StrokeThickness="1"
-                          Grid.Row="0">
+                          StrokeThickness="1">
                         <Path.Data>
                             <MultiBinding Converter="{StaticResource ClassViewPosition2ConnectionLineConverter}">
                                 <Binding RelativeSource="{RelativeSource Self}" Path="DataContext.X" />
