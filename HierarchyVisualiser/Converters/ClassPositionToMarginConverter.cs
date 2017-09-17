@@ -12,8 +12,8 @@ namespace HierarchyVisualiser.Converters
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            var x = (double)values[0];
-            var y = (double)values[1];
+            var x = (double)values[0] > 0 ? (double)values[0] : 0;
+            var y = (double)values[1] > 0 ? (double)values[1] : 0;
 
             return new Thickness(x, y, 0, 0);
         }

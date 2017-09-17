@@ -94,6 +94,9 @@ namespace HierarchyVisualiser.ViewModels
             get { return _yCoord; }
             set
             {
+                if (value < 0)
+                    return;
+
                 _yCoord = value;
                 RaisePropertyChanged();
             }
@@ -107,6 +110,9 @@ namespace HierarchyVisualiser.ViewModels
             get { return _xCoord; }
             set
             {
+                if (value < 0)
+                    return;
+
                 _xCoord = value;
                 RaisePropertyChanged();
             }

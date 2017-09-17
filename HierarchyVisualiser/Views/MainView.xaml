@@ -61,27 +61,29 @@
 
         <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
 
-        <ItemsControl Grid.Column="2" ItemsSource="{Binding SelectedClasses}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Grid />
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-            <ItemsControl.ItemContainerStyle>
-                <Style TargetType="ContentPresenter">
-                    <Setter Property="Margin">
-                        <Setter.Value>
-                            <MultiBinding Converter="{StaticResource ClassPositionToMarginConverter}">
-                                <Binding Path="X" />
-                                <Binding Path="Y" />
-                            </MultiBinding>
-                        </Setter.Value>
-                    </Setter>
-                    <Setter Property="HorizontalAlignment" Value="Left" />
-                    <Setter Property="VerticalAlignment" Value="Top" />
-                </Style>
-            </ItemsControl.ItemContainerStyle>
-        </ItemsControl>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.Column="2">
+            <ItemsControl ItemsSource="{Binding SelectedClasses}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <Grid />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemContainerStyle>
+                    <Style TargetType="ContentPresenter">
+                        <Setter Property="Margin">
+                            <Setter.Value>
+                                <MultiBinding Converter="{StaticResource ClassPositionToMarginConverter}">
+                                    <Binding Path="X" />
+                                    <Binding Path="Y" />
+                                </MultiBinding>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="HorizontalAlignment" Value="Left" />
+                        <Setter Property="VerticalAlignment" Value="Top" />
+                    </Style>
+                </ItemsControl.ItemContainerStyle>
+            </ItemsControl>
+        </ScrollViewer>
 
         <ItemsControl Grid.Column="2" ItemsSource="{Binding SelectedClasses}">
             <ItemsControl.ItemsPanel>
