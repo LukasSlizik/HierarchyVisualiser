@@ -19,7 +19,7 @@
             <views:ClassView/>
         </DataTemplate>
 
-        <converters:ConnectionConverter x:Key="ConnectionConverter" />
+        <converters:ClassViewPosition2ConnectionLineConverter x:Key="ClassViewPosition2ConnectionLineConverter" />
     </UserControl.Resources>
 
     <Grid>
@@ -89,12 +89,9 @@
                           StrokeThickness="1"
                           Grid.Row="0">
                         <Path.Data>
-                            <MultiBinding Converter="{StaticResource ConnectionConverter}">
-                                <Binding RelativeSource="{RelativeSource Self}" Path="ActualWidth"/>
-                                <Binding RelativeSource="{RelativeSource Self}" Path="ActualHeight"/>
+                            <MultiBinding Converter="{StaticResource ClassViewPosition2ConnectionLineConverter}">
                                 <Binding RelativeSource="{RelativeSource Self}" Path="DataContext.X" />
                                 <Binding RelativeSource="{RelativeSource Self}" Path="DataContext.Y" />
-                                <Binding RelativeSource="{RelativeSource Self}" />
                             </MultiBinding>
                         </Path.Data>
                     </Path>
