@@ -62,7 +62,7 @@
         <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
 
         <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.Column="2">
-            <ItemsControl ItemsSource="{Binding SelectedClasses}">
+            <ItemsControl ItemsSource="{Binding SelectedClasses}" x:Name="Members">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Grid />
@@ -85,7 +85,7 @@
             </ItemsControl>
         </ScrollViewer>
 
-        <ItemsControl Grid.Column="2" ItemsSource="{Binding SelectedClasses}">
+        <ItemsControl Grid.Column="2" ItemsSource="{Binding SelectedClasses}" x:Name="Connections">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Canvas />
@@ -102,6 +102,8 @@
                             <MultiBinding Converter="{StaticResource ClassViewPosition2ConnectionLineConverter}">
                                 <Binding RelativeSource="{RelativeSource Self}" Path="DataContext.X" />
                                 <Binding RelativeSource="{RelativeSource Self}" Path="DataContext.Y" />
+                                <Binding ElementName="Members" />
+                                <Binding RelativeSource="{RelativeSource Self}" Path="DataContext.Guid" />
                             </MultiBinding>
                         </Path.Data>
                     </Path>

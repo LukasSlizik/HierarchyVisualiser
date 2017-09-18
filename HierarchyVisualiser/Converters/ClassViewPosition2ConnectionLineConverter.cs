@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Globalization;
+using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
+using System.Linq;
+using HierarchyVisualiser.Views;
 
 namespace HierarchyVisualiser.Converters
 {
@@ -14,6 +17,15 @@ namespace HierarchyVisualiser.Converters
         {
             var x = (double)values[0];
             var y = (double)values[1];
+
+            var members = (ItemsControl)values[2];
+            var guidToFind = (System.Guid)values[3];
+
+            //var memberToFind = members.Items.ToList().Where(item => item.Tag == guidToFind);
+            foreach(var item in members.Items)
+            {
+                if ((ClassView)item)
+            }
 
             var linePositionX = x;
             var linePositionY = y;

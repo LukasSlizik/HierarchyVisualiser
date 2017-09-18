@@ -18,12 +18,12 @@ namespace HierarchyVisualiser.ViewModels
         internal event EventHandler SelectionChanged;
         private double _yCoord;
         private double _xCoord;
-        private string _connection;
 
         public ClassViewModel(Type t)
         {
             WrappedType = t;
             ClassName = t.Name;
+            Guid = Guid.NewGuid();
 
             PopulateWithClassMembers();
         }
@@ -101,6 +101,8 @@ namespace HierarchyVisualiser.ViewModels
                 RaisePropertyChanged();
             }
         }
+
+        public Guid Guid { get; set; }
 
         /// <summary>
         /// X Coordinate on the Canvas.
