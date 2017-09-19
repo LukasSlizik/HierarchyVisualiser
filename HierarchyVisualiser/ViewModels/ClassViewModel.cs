@@ -102,6 +102,9 @@ namespace HierarchyVisualiser.ViewModels
             }
         }
 
+        /// <summary>
+        /// Identifies the object on the canvas.
+        /// </summary>
         public Guid Guid { get; set; }
 
         /// <summary>

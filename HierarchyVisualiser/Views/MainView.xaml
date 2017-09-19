@@ -100,9 +100,9 @@
                           StrokeThickness="1">
                         <Path.Data>
                             <MultiBinding Converter="{StaticResource ClassViewPosition2ConnectionLineConverter}">
+                                <Binding ElementName="Members" />
                                 <Binding RelativeSource="{RelativeSource Self}" Path="DataContext.X" />
                                 <Binding RelativeSource="{RelativeSource Self}" Path="DataContext.Y" />
-                                <Binding ElementName="Members" />
                                 <Binding RelativeSource="{RelativeSource Self}" Path="DataContext.Guid" />
                             </MultiBinding>
                         </Path.Data>
