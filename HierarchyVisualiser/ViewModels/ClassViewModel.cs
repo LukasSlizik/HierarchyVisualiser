@@ -16,9 +16,11 @@ namespace HierarchyVisualiser.ViewModels
         private bool _isSelected;
         private string _className;
         internal event EventHandler SelectionChanged;
+        private ClassViewModel _parentClassViewModel;
         private double _yCoord;
         private double _xCoord;
         private double _width;
+        private double _height;
 
         public ClassViewModel(Type t)
         {
@@ -40,6 +42,22 @@ namespace HierarchyVisualiser.ViewModels
             set
             {
                 _width = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        /// <summary>
+        /// Actual Height of the ClassView
+        /// </summary>
+        public double Height
+        {
+            get
+            {
+                return _height;
+            }
+            set
+            {
+                _height = value;
                 RaisePropertyChanged();
             }
         }
@@ -101,6 +119,19 @@ namespace HierarchyVisualiser.ViewModels
         }
 
         public Type WrappedType { get; }
+
+        public ClassViewModel ParentClassViewModel
+        {
+            get
+            {
+                return _parentClassViewModel;
+            }
+            set
+            {
+                _parentClassViewModel = value;
+                RaisePropertyChanged();
+            }
+        }
 
         /// <summary>
         /// X Coordinate on the Canvas.

@@ -19,6 +19,7 @@ namespace HierarchyVisualiser.Views
             var classView = (ClassView)sender;
             var classViewModel = (ClassViewModel)classView.DataContext;
             classViewModel.Width = e.NewSize.Width;
+            classViewModel.Height = e.NewSize.Height;
         }
     }
 }

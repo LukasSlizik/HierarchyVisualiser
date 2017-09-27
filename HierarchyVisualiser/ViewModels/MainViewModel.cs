@@ -66,25 +66,26 @@ namespace HierarchyVisualiser.ViewModels
             return true;
         }
 
-        public GenericRelayCommand<Type> ShowBaseCommand { get; set; }
+        public GenericRelayCommand<ClassViewModel> ShowBaseCommand { get; set; }
 
         private void RegistCommands()
         {
-            ShowBaseCommand = new GenericRelayCommand<Type>(OnShowBaseCommandExecute);
+            ShowBaseCommand = new GenericRelayCommand<ClassViewModel>(OnShowBaseCommandExecute);
         }
 
-        private void OnShowBaseCommandExecute(Type t)
+        private void OnShowBaseCommandExecute(ClassViewModel classVm)
         {
-            if (t == null)
-                throw new ArgumentNullException(nameof(t));
+            if (classVm == null)
+                throw new ArgumentNullException(nameof(classVm));
             {
-                var baseType = t.BaseType;
+                var baseType = classVm.WrappedType.BaseType;
 
                 // if t is already object, then there is no base type
                 if (baseType != null)
                 {
-                    var newCvm = new ClassViewModel(baseType);
-                    SelectedClasses.Add(newCvm);
+                    var parentClassVm = new ClassViewModel(baseType);
+                    classVm.ParentClassViewModel = parentClassVm;
+                    SelectedClasses.Add(parentClassVm);
                 }
             }
         }

@@ -1,10 +1,8 @@
-﻿using System;
+﻿using HierarchyVisualiser.ViewModels;
+using System;
 using System.Globalization;
-using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
-using System.Linq;
-using HierarchyVisualiser.Views;
 
 namespace HierarchyVisualiser.Converters
 {
@@ -15,15 +13,35 @@ namespace HierarchyVisualiser.Converters
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            var x = (double)values[0];
-            var y = (double)values[1];
-            var width = (double)values[2];
+            var childX = (double)values[0];
+            var childY = (double)values[1];
+            var childWidth = (double)values[2];
+            var parentVm = (ClassViewModel)values[3];
 
-            var linePositionX = x + (width/2);
-            var linePositionY = y;
+            var startPositionX = childX + (childWidth/2);
+            var startPositionY = childY;
 
+            if (parentVm != null)
+            {
+                try
+                {
+                    var parentX = (double)values[4];
+                    var parentY = (double)values[5];
+                    var parentWidth = (double)values[6];
+                    var parentHeight = (double)values[7];
 
-            return new LineGeometry(new System.Windows.Point(linePositionX, linePositionY), new System.Windows.Point(linePositionX, linePositionY - 100));
+                    var endPositionX = parentX + (parentWidth / 2);
+                    var endPositionY = parentY + parentHeight;
+
+                    return new LineGeometry(new System.Windows.Point(startPositionX, startPositionY), new System.Windows.Point(endPositionX, endPositionY));
+                }
+                catch
+                {
+                    return string.Empty;
+                }
+            }
+
+            return string.Empty;
         }
 
         public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)

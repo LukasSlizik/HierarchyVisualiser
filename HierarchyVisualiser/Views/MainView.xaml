@@ -103,6 +103,11 @@
                                 <Binding RelativeSource="{RelativeSource Self}" Path="DataContext.X" />
                                 <Binding RelativeSource="{RelativeSource Self}" Path="DataContext.Y" />
                                 <Binding RelativeSource="{RelativeSource Self}" Path="DataContext.Width" />
+                                <Binding RelativeSource="{RelativeSource Self}" Path="DataContext.ParentClassViewModel" />
+                                <Binding RelativeSource="{RelativeSource Self}" Path="DataContext.ParentClassViewModel.X" />
+                                <Binding RelativeSource="{RelativeSource Self}" Path="DataContext.ParentClassViewModel.Y" />
+                                <Binding RelativeSource="{RelativeSource Self}" Path="DataContext.ParentClassViewModel.Width" />
+                                <Binding RelativeSource="{RelativeSource Self}" Path="DataContext.ParentClassViewModel.Height" />
                             </MultiBinding>
                         </Path.Data>
                     </Path>
