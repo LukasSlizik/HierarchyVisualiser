@@ -15,17 +15,13 @@ namespace HierarchyVisualiser.Converters
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            var allShownItems = ((ItemsControl)values[0]).Items;
-            var x = (double)values[1];
-            var y = (double)values[2];
-            var guidToFind = (Guid)values[3];
+            var x = (double)values[0];
+            var y = (double)values[1];
+            var width = (double)values[2];
 
-            var searchedObject = allShownItems.Cast<ClassView>().SingleOrDefault(item => (Guid)item.Tag == guidToFind);
-            var width = searchedObject.ActualWidth;
-            var height = searchedObject.ActualHeight;
-
-            var linePositionX = x + (width / 2);
+            var linePositionX = x + (width/2);
             var linePositionY = y;
+
 
             return new LineGeometry(new System.Windows.Point(linePositionX, linePositionY), new System.Windows.Point(linePositionX, linePositionY - 100));
         }

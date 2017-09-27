@@ -10,8 +10,7 @@
              xmlns:converters="clr-namespace:HierarchyVisualiser.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
-             Loaded="Window_Loaded"
-             Tag="{Binding Guid}">
+             SizeChanged="OnSizeChanged">
 
     <UserControl.Resources>
         <ResourceDictionary>
@@ -105,7 +104,7 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <controls:MyThumb behaviors:ThumbDragBehavior.ThumbCanBeDragged="True" >
+    <controls:MyThumb behaviors:ThumbDragBehavior.ThumbCanBeDragged="True">
         <controls:MyThumb.Template>
             <ControlTemplate>
                 <Grid>

@@ -18,14 +18,30 @@ namespace HierarchyVisualiser.ViewModels
         internal event EventHandler SelectionChanged;
         private double _yCoord;
         private double _xCoord;
+        private double _width;
 
         public ClassViewModel(Type t)
         {
             WrappedType = t;
             ClassName = t.Name;
-            Guid = Guid.NewGuid();
 
             PopulateWithClassMembers();
+        }
+
+        /// <summary>
+        /// Actual Width of the ClassView
+        /// </summary>
+        public double Width
+        {
+            get
+            {
+                return _width;
+            }
+            set
+            {
+                _width = value;
+                RaisePropertyChanged();
+            }
         }
 
         /// <summary>
@@ -101,11 +117,6 @@ namespace HierarchyVisualiser.ViewModels
                 RaisePropertyChanged();
             }
         }
-
-        /// <summary>
-        /// Identifies the object on the canvas.
-        /// </summary>
-        public Guid Guid { get; set; }
 
         /// <summary>
         /// X Coordinate on the Canvas.
