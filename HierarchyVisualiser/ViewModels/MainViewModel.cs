@@ -2,6 +2,7 @@
 using HierarchyVisualiser.Contracts;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Reflection;
 
 namespace HierarchyVisualiser.ViewModels
@@ -12,11 +13,11 @@ namespace HierarchyVisualiser.ViewModels
     internal class MainViewModel : ViewModelBase, IAssemblyFileLoader
     {
         private ObservableCollection<AssemblyViewModel> _assemblies = new ObservableCollection<AssemblyViewModel>();
-        private ObservableCollection<ClassViewModel> _selectedClasses;
+        private ObservableCollection<ClassViewModel> _shownClasses;
 
         public MainViewModel()
         {
-            SelectedClasses = new ObservableCollection<ClassViewModel>();
+            ShownClasses = new ObservableCollection<ClassViewModel>();
             RegisterEventHandlersOnAssemblies();
             RegistCommands();
 
@@ -47,9 +48,9 @@ namespace HierarchyVisualiser.ViewModels
         {
             var classViewModel = (ClassViewModel)sender;
             if (classViewModel.IsSelected)
-                SelectedClasses.Add(classViewModel);
+                ShownClasses.Add(classViewModel);
             else
-                SelectedClasses.Remove(classViewModel);
+                ShownClasses.Remove(classViewModel);
         }
 
         public bool TryLoadAssemblyFromFile(string file)
@@ -73,21 +74,30 @@ namespace HierarchyVisualiser.ViewModels
             ShowBaseCommand = new GenericRelayCommand<ClassViewModel>(OnShowBaseCommandExecute);
         }
 
+        /// <summary>
+        /// ToDo: Refactoring
+        /// </summary>
         private void OnShowBaseCommandExecute(ClassViewModel classVm)
         {
             if (classVm == null)
                 throw new ArgumentNullException(nameof(classVm));
-            {
-                var baseType = classVm.WrappedType.BaseType;
 
-                // if t is already object, then there is no base type
-                if (baseType != null)
-                {
-                    var parentClassVm = new ClassViewModel(baseType);
-                    classVm.ParentClassViewModel = parentClassVm;
-                    SelectedClasses.Add(parentClassVm);
-                }
+            var baseType = classVm.WrappedType.BaseType;
+
+            // if t is already object, then there is no base type
+            if (baseType == null)
+                return;
+
+            var newClassVm = new ClassViewModel(baseType);
+            if (ShownClasses.Contains(newClassVm))
+            {
+                var baseClass = ShownClasses.Single(c => c.WrappedType == newClassVm.WrappedType);
+                classVm.ParentClassViewModel = baseClass;
+                return;
             }
+
+            classVm.ParentClassViewModel = newClassVm;
+            ShownClasses.Add(newClassVm);
         }
 
         public void LoadAssemblyFromFile(string file)
@@ -121,18 +131,18 @@ namespace HierarchyVisualiser.ViewModels
             }
         }
 
-        public ObservableCollection<ClassViewModel> SelectedClasses
+        public ObservableCollection<ClassViewModel> ShownClasses
         {
             get
             {
-                return _selectedClasses;
+                return _shownClasses;
             }
             set
             {
-                if (_selectedClasses == value)
+                if (_shownClasses == value)
                     return;
 
-                _selectedClasses = value;
+                _shownClasses = value;
                 RaisePropertyChanged();
             }
         }

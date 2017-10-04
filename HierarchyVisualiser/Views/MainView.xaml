@@ -62,7 +62,7 @@
         <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" />
 
         <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.Column="2">
-            <ItemsControl ItemsSource="{Binding SelectedClasses}" x:Name="Members">
+            <ItemsControl ItemsSource="{Binding ShownClasses}" x:Name="Members">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Grid />
@@ -85,7 +85,7 @@
             </ItemsControl>
         </ScrollViewer>
 
-        <ItemsControl Grid.Column="2" ItemsSource="{Binding SelectedClasses}" x:Name="Connections">
+        <ItemsControl Grid.Column="2" ItemsSource="{Binding ShownClasses}" x:Name="Connections">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <Canvas />

@@ -10,7 +10,7 @@ namespace HierarchyVisualiser.ViewModels
     /// <summary>
     /// Represents a Class, identiefied by its Name, as a Collection of Class Members (Methods, Events, Constructors, Properties).
     /// </summary>
-    internal class ClassViewModel : ViewModelBase
+    internal class ClassViewModel : ViewModelBase, IEquatable<ClassViewModel>
     {
         private ObservableCollection<ClassMemberViewModel> _members = new ObservableCollection<ClassMemberViewModel>();
         private bool _isSelected;
@@ -98,6 +98,20 @@ namespace HierarchyVisualiser.ViewModels
 
             var ctors = ((TypeInfo)WrappedType).DeclaredConstructors.Cast<ConstructorInfo>();
             Members.AddRange(ctors.Select(ci => new ClassMemberViewModel(ci, MemberType.Constructor)));
+        }
+
+        /// <summary>
+        /// ToDo: Object.Equals, Object.GetHashCode, Equality und Inequality Op implementieren
+        /// </summary>
+        public bool Equals(ClassViewModel other)
+        {
+            if (other == null)
+                return false;
+
+            if (WrappedType == other.WrappedType)
+                return true;
+
+            return false;
         }
 
         /// <summary>
