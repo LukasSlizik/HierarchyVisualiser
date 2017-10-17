@@ -119,6 +119,7 @@
                         <Border.ContextMenu>
                             <ContextMenu StaysOpen="true">
                                 <MenuItem Header="Show Base" Command="{Binding PlacementTarget.Tag.ShowBaseCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}" CommandParameter="{Binding}"/>
+                                <MenuItem Header="Show Interfaces" Command="{Binding PlacementTarget.Tag.ShowInterfacesCommand, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContextMenu}}" CommandParameter="{Binding}"/>
                             </ContextMenu>
                         </Border.ContextMenu>
                         <Grid>

@@ -62,14 +62,20 @@
     <Compile Include="Controls\MyThumb.cs" />
     <Compile Include="Converters\ClassViewPosition2ConnectionLineConverter.cs" />
     <Compile Include="Converters\ClassPositionToMarginConverter.cs" />
+    <Compile Include="Converters\ConnectionConverter.cs" />
     <Compile Include="Helpers\Extensions.cs" />
     <Compile Include="ViewModels\AssemblyViewModel.cs" />
     <Compile Include="ViewModels\ClassMembers\ClassMemberViewModel.cs" />
     <Compile Include="MemberType.cs" />
     <Compile Include="Contracts\IAssemblyFileLoader.cs" />
+    <Compile Include="ViewModels\ConnectionViewModel.cs" />
     <Compile Include="ViewModels\NamespaceViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
     <Page Include="Views\ClassView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConnectionView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -89,6 +95,9 @@
       <DependentUpon>ClassView.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\ClassViewModel.cs" />
+    <Compile Include="Views\ConnectionView.xaml.cs">
+      <DependentUpon>ConnectionView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
     </Compile>

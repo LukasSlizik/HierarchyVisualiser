@@ -14,6 +14,7 @@ namespace HierarchyVisualiser.ViewModels
     {
         private ObservableCollection<AssemblyViewModel> _assemblies = new ObservableCollection<AssemblyViewModel>();
         private ObservableCollection<ClassViewModel> _shownClasses;
+        private ObservableCollection<ConnectionViewModel> _connections = new ObservableCollection<ConnectionViewModel>();
 
         public MainViewModel()
         {
@@ -68,10 +69,34 @@ namespace HierarchyVisualiser.ViewModels
         }
 
         public GenericRelayCommand<ClassViewModel> ShowBaseCommand { get; set; }
+        public GenericRelayCommand<ClassViewModel> ShowInterfacesCommand { get; set; }
 
         private void RegistCommands()
         {
             ShowBaseCommand = new GenericRelayCommand<ClassViewModel>(OnShowBaseCommandExecute);
+            ShowInterfacesCommand = new GenericRelayCommand<ClassViewModel>(OnShowInterfacesCommandExecute);
+        }
+
+        private void OnShowInterfacesCommandExecute(ClassViewModel classVm)
+        {
+            if (classVm == null)
+                throw new ArgumentNullException(nameof(classVm));
+
+            var wrappedType = classVm.WrappedType;
+
+            foreach (var @interface in wrappedType.GetInterfaces())
+            {
+                var newInterface = new ClassViewModel(@interface);
+                if (ShownClasses.Contains(newInterface))
+                {
+                    var searchedInterface = ShownClasses.Single(c => c.WrappedType == newInterface.WrappedType);
+                    CreateNewConnection(classVm, searchedInterface);
+                    continue;
+                }
+
+                CreateNewConnection(classVm, newInterface);
+                ShownClasses.Add(newInterface);
+            }
         }
 
         /// <summary>
@@ -93,11 +118,26 @@ namespace HierarchyVisualiser.ViewModels
             {
                 var baseClass = ShownClasses.Single(c => c.WrappedType == newClassVm.WrappedType);
                 classVm.ParentClassViewModel = baseClass;
+
+                CreateNewConnection(classVm, baseClass);
                 return;
             }
+            else
+            {
+                classVm.ParentClassViewModel = newClassVm;
+                ShownClasses.Add(newClassVm);
 
-            classVm.ParentClassViewModel = newClassVm;
-            ShownClasses.Add(newClassVm);
+                CreateNewConnection(classVm, newClassVm);
+                return;
+            }
+        }
+
+        private void CreateNewConnection(ClassViewModel start, ClassViewModel end)
+        {
+            var connectionVm = new ConnectionViewModel();
+            connectionVm.Start = start;
+            connectionVm.End = end;
+            Connections.Add(connectionVm);
         }
 
         public void LoadAssemblyFromFile(string file)
@@ -143,6 +183,22 @@ namespace HierarchyVisualiser.ViewModels
                     return;
 
                 _shownClasses = value;
+                RaisePropertyChanged();
+            }
+        }
+
+        public ObservableCollection<ConnectionViewModel> Connections
+        {
+            get
+            {
+                return _connections;
+            }
+            set
+            {
+                if (_connections == value)
+                    return;
+
+                _connections = value;
                 RaisePropertyChanged();
             }
         }
