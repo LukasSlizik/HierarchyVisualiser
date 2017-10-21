@@ -8,24 +8,23 @@ using System.Reflection;
 namespace HierarchyVisualiser.ViewModels
 {
     /// <summary>
-    /// Represents a Class, identiefied by its Name, as a Collection of Class Members (Methods, Events, Constructors, Properties).
+    /// Represents a Class, Interface, Struct, Enum of Delegate.
     /// </summary>
-    internal class ClassViewModel : ViewModelBase, IEquatable<ClassViewModel>
+    internal class TypeViewModel : ViewModelBase, IEquatable<TypeViewModel>
     {
         private ObservableCollection<ClassMemberViewModel> _members = new ObservableCollection<ClassMemberViewModel>();
         private bool _isSelected;
-        private string _className;
+        private string _fullName;
         internal event EventHandler SelectionChanged;
-        private ClassViewModel _parentClassViewModel;
         private double _yCoord;
         private double _xCoord;
         private double _width;
         private double _height;
 
-        public ClassViewModel(Type t)
+        public TypeViewModel(Type t)
         {
             WrappedType = t;
-            ClassName = t.Name;
+            FullName = t.FullName;
 
             PopulateWithClassMembers();
         }
@@ -103,7 +102,7 @@ namespace HierarchyVisualiser.ViewModels
         /// <summary>
         /// ToDo: Object.Equals, Object.GetHashCode, Equality und Inequality Op implementieren
         /// </summary>
-        public bool Equals(ClassViewModel other)
+        public bool Equals(TypeViewModel other)
         {
             if (other == null)
                 return false;
@@ -117,35 +116,22 @@ namespace HierarchyVisualiser.ViewModels
         /// <summary>
         /// Gets of Sets the Class Name.
         /// </summary>
-        public string ClassName
+        public string FullName
         {
             get
             {
-                return _className;
+                return _fullName;
             }
             set
             {
-                if (value == _className)
+                if (value == _fullName)
                     return;
-                _className = value;
+                _fullName = value;
                 RaisePropertyChanged();
             }
         }
 
         public Type WrappedType { get; }
-
-        public ClassViewModel ParentClassViewModel
-        {
-            get
-            {
-                return _parentClassViewModel;
-            }
-            set
-            {
-                _parentClassViewModel = value;
-                RaisePropertyChanged();
-            }
-        }
 
         /// <summary>
         /// X Coordinate on the Canvas.

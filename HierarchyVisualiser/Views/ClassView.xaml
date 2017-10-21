@@ -127,7 +127,7 @@
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
 
-                            <TextBlock Grid.Row="0" Text="{Binding ClassName}" Margin="5"  />
+                            <TextBlock Grid.Row="0" Text="{Binding FullName}" Margin="5"  />
                             <ItemsControl Grid.Row="1" ItemsSource="{Binding Source={StaticResource Members}}" >
                                 <ItemsControl.GroupStyle>
                                     <GroupStyle>

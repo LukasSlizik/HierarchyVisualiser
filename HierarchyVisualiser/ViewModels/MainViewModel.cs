@@ -13,12 +13,12 @@ namespace HierarchyVisualiser.ViewModels
     internal class MainViewModel : ViewModelBase, IAssemblyFileLoader
     {
         private ObservableCollection<AssemblyViewModel> _assemblies = new ObservableCollection<AssemblyViewModel>();
-        private ObservableCollection<ClassViewModel> _shownClasses;
+        private ObservableCollection<TypeViewModel> _shownTypes;
         private ObservableCollection<ConnectionViewModel> _connections = new ObservableCollection<ConnectionViewModel>();
 
         public MainViewModel()
         {
-            ShownClasses = new ObservableCollection<ClassViewModel>();
+            ShownTypes = new ObservableCollection<TypeViewModel>();
             RegisterEventHandlersOnAssemblies();
             RegistCommands();
 
@@ -47,11 +47,11 @@ namespace HierarchyVisualiser.ViewModels
 
         private void OnSelectionChanged(object sender, EventArgs args)
         {
-            var classViewModel = (ClassViewModel)sender;
+            var classViewModel = (TypeViewModel)sender;
             if (classViewModel.IsSelected)
-                ShownClasses.Add(classViewModel);
+                ShownTypes.Add(classViewModel);
             else
-                ShownClasses.Remove(classViewModel);
+                ShownTypes.Remove(classViewModel);
         }
 
         public bool TryLoadAssemblyFromFile(string file)
@@ -68,82 +68,65 @@ namespace HierarchyVisualiser.ViewModels
             return true;
         }
 
-        public GenericRelayCommand<ClassViewModel> ShowBaseCommand { get; set; }
-        public GenericRelayCommand<ClassViewModel> ShowInterfacesCommand { get; set; }
+        public GenericRelayCommand<TypeViewModel> ShowBaseCommand { get; set; }
+        public GenericRelayCommand<TypeViewModel> ShowInterfacesCommand { get; set; }
 
         private void RegistCommands()
         {
-            ShowBaseCommand = new GenericRelayCommand<ClassViewModel>(OnShowBaseCommandExecute, OnShowBaseCommandCanExecute);
-            ShowInterfacesCommand = new GenericRelayCommand<ClassViewModel>(OnShowInterfacesCommandExecute, (classVm) => true);
+            ShowBaseCommand = new GenericRelayCommand<TypeViewModel>(OnShowBaseCommandExecute, OnShowBaseCommandCanExecute);
+            ShowInterfacesCommand = new GenericRelayCommand<TypeViewModel>(OnShowInterfacesCommandExecute);
         }
 
-        private bool OnShowBaseCommandCanExecute(ClassViewModel classVm)
+        private bool OnShowBaseCommandCanExecute(TypeViewModel classVm)
         {
             // Object doesn't have any base class -> disable
             return classVm?.WrappedType?.BaseType != null;
         }
             
-
-        private void OnShowInterfacesCommandExecute(ClassViewModel classVm)
+        /// <summary>
+        /// Connects the class with it's interfaces.
+        /// </summary>
+        private void OnShowInterfacesCommandExecute(TypeViewModel child)
         {
-            if (classVm == null)
-                throw new ArgumentNullException(nameof(classVm));
-
-            var wrappedType = classVm.WrappedType;
-
-            foreach (var @interface in wrappedType.GetInterfaces())
+            foreach (var @interface in child.WrappedType.GetInterfaces())
             {
-                var newInterface = new ClassViewModel(@interface);
-                if (ShownClasses.Contains(newInterface))
-                {
-                    var searchedInterface = ShownClasses.Single(c => c.WrappedType == newInterface.WrappedType);
-                    CreateNewConnection(classVm, searchedInterface);
-                    continue;
-                }
-
-                CreateNewConnection(classVm, newInterface);
-                ShownClasses.Add(newInterface);
+                var newInterface = GetOrCreateViewModel(@interface);
+                Connect(child, newInterface);
             }
         }
 
         /// <summary>
-        /// ToDo: Refactoring
+        /// Connects the child with it's parent.
         /// </summary>
-        private void OnShowBaseCommandExecute(ClassViewModel classVm)
+        private void OnShowBaseCommandExecute(TypeViewModel child)
         {
-            if (classVm == null)
-                throw new ArgumentNullException(nameof(classVm));
-
-            var baseType = classVm.WrappedType.BaseType;
-
-            // if t is already object, then there is no base type
-            //if (baseType == null)
-            //    return;
-
-            var newClassVm = new ClassViewModel(baseType);
-            if (ShownClasses.Contains(newClassVm))
-            {
-                var baseClass = ShownClasses.Single(c => c.WrappedType == newClassVm.WrappedType);
-                classVm.ParentClassViewModel = baseClass;
-
-                CreateNewConnection(classVm, baseClass);
-                return;
-            }
-            else
-            {
-                classVm.ParentClassViewModel = newClassVm;
-                ShownClasses.Add(newClassVm);
-
-                CreateNewConnection(classVm, newClassVm);
-                return;
-            }
+            var parent = GetOrCreateViewModel(child.WrappedType.BaseType);
+            Connect(child, parent);
         }
 
-        private void CreateNewConnection(ClassViewModel start, ClassViewModel end)
+        /// <summary>
+        /// Get the TypeViewModel representing the type or create new ViewModel
+        /// </summary>
+        private TypeViewModel GetOrCreateViewModel(Type t)
+        {
+            var newInterface = ShownTypes.SingleOrDefault(c => c.FullName == t.FullName);
+            if (newInterface == null)
+            {
+                newInterface = new TypeViewModel(t);
+                ShownTypes.Add(newInterface);
+            }
+
+            return newInterface;
+        }
+
+        /// <summary>
+        /// Creates new ConnectionViewModel and connects the child with it's parent
+        /// </summary>
+        private void Connect(TypeViewModel child, TypeViewModel parent)
         {
             var connectionVm = new ConnectionViewModel();
-            connectionVm.Start = start;
-            connectionVm.End = end;
+            connectionVm.Start = child;
+            connectionVm.End = parent;
             Connections.Add(connectionVm);
         }
 
@@ -178,18 +161,18 @@ namespace HierarchyVisualiser.ViewModels
             }
         }
 
-        public ObservableCollection<ClassViewModel> ShownClasses
+        public ObservableCollection<TypeViewModel> ShownTypes
         {
             get
             {
-                return _shownClasses;
+                return _shownTypes;
             }
             set
             {
-                if (_shownClasses == value)
+                if (_shownTypes == value)
                     return;
 
-                _shownClasses = value;
+                _shownTypes = value;
                 RaisePropertyChanged();
             }
         }

@@ -15,7 +15,7 @@
     </UserControl.DataContext>
 
     <UserControl.Resources>
-        <DataTemplate DataType="{x:Type viewModels:ClassViewModel}">
+        <DataTemplate DataType="{x:Type viewModels:TypeViewModel}">
             <views:ClassView/>
         </DataTemplate>
 
@@ -53,10 +53,10 @@
                 <HierarchicalDataTemplate DataType="{x:Type viewModels:NamespaceViewModel}" ItemsSource="{Binding Classes}">
                     <TextBlock Text="{Binding Namespace}" />
                 </HierarchicalDataTemplate>
-                <DataTemplate DataType="{x:Type viewModels:ClassViewModel}">
+                <DataTemplate DataType="{x:Type viewModels:TypeViewModel}">
                     <StackPanel Orientation="Horizontal">
                         <CheckBox IsChecked="{Binding IsSelected}" />
-                        <TextBlock Text="{Binding ClassName}" />
+                        <TextBlock Text="{Binding FullName}" />
                     </StackPanel>
                 </DataTemplate>
             </TreeView.Resources>
@@ -66,7 +66,7 @@
 
         <!-- Classes, Interfaces, Enums, Delegates, Structs -->
         <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" Grid.Column="2">
-            <ItemsControl ItemsSource="{Binding ShownClasses}" x:Name="Members">
+            <ItemsControl ItemsSource="{Binding ShownTypes}" x:Name="Members">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <Grid />

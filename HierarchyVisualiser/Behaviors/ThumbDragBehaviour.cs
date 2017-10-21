@@ -44,7 +44,7 @@ namespace HierarchyVisualiser.Behaviors
         /// </summary>
         private static void OnDragDelta(object sender, DragDeltaEventArgs args)
         {
-            var n = (ClassViewModel)((FrameworkElement)sender).DataContext;
+            var n = (TypeViewModel)((FrameworkElement)sender).DataContext;
             n.X += args.HorizontalChange;
             n.Y += args.VerticalChange;
         }

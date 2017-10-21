@@ -19,6 +19,11 @@ namespace HierarchyVisualiser.Commands
             _canExecute = canExecute;
         }
 
+        public GenericRelayCommand(Action<T> execute)
+        {
+            _execute = execute;
+        }
+
         public bool CanExecute(object p) => _canExecute((T)p);
         public void Execute(object p) => _execute((T)p);
 

@@ -9,7 +9,7 @@
              d:DesignHeight="300" d:DesignWidth="300">
 
     <UserControl.Resources>
-        <converters:ConnectionConverter x:Key="ConnectionConverter" />
+        <converters:ThumbsPosititionToConnectionConverter x:Key="ConnectionConverter" />
     </UserControl.Resources>
 
     <Path x:Name="Arrow" 

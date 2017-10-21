@@ -60,11 +60,11 @@
     <Compile Include="Commands\GenericRelayCommand.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
     <Compile Include="Converters\ClassPositionToMarginConverter.cs" />
-    <Compile Include="Converters\ConnectionConverter.cs" />
+    <Compile Include="Converters\ThumbsPosititionToConnectionConverter.cs" />
     <Compile Include="Helpers\Extensions.cs" />
     <Compile Include="ViewModels\AssemblyViewModel.cs" />
     <Compile Include="ViewModels\ClassMembers\ClassMemberViewModel.cs" />
-    <Compile Include="MemberType.cs" />
+    <Compile Include="Models\MemberType.cs" />
     <Compile Include="Contracts\IAssemblyFileLoader.cs" />
     <Compile Include="ViewModels\ConnectionViewModel.cs" />
     <Compile Include="ViewModels\NamespaceViewModel.cs" />

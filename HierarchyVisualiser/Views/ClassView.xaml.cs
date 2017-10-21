@@ -17,7 +17,7 @@ namespace HierarchyVisualiser.Views
         private void OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
             var classView = (ClassView)sender;
-            var classViewModel = (ClassViewModel)classView.DataContext;
+            var classViewModel = (TypeViewModel)classView.DataContext;
             classViewModel.Width = e.NewSize.Width;
             classViewModel.Height = e.NewSize.Height;
         }

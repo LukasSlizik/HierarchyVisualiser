@@ -12,7 +12,7 @@ namespace HierarchyVisualiser.ViewModels
     internal class NamespaceViewModel : ViewModelBase
     {
         private string _namespace;
-        private ObservableCollection<ClassViewModel> _classes;
+        private ObservableCollection<TypeViewModel> _classes;
         private Assembly _assembly;
         public event EventHandler SelectionChanged;
 
@@ -50,7 +50,7 @@ namespace HierarchyVisualiser.ViewModels
         /// <summary>
         /// Collection of classes contained within the Namespace.
         /// </summary>
-        public ObservableCollection<ClassViewModel> Classes
+        public ObservableCollection<TypeViewModel> Classes
         {
             get
             {
@@ -70,12 +70,12 @@ namespace HierarchyVisualiser.ViewModels
         /// </summary>
         private void PopulateClasses()
         {
-            Classes = new ObservableCollection<ClassViewModel>();
+            Classes = new ObservableCollection<TypeViewModel>();
             var exportedTypes = _assembly.GetExportedTypes().Where(t => t.Namespace == Namespace);
             
             foreach(var t in exportedTypes)
             {
-                var c = new ClassViewModel(t);
+                var c = new TypeViewModel(t);
                 c.SelectionChanged += OnSelectionChanged;
                 Classes.Add(c);
             }

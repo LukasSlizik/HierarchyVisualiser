@@ -8,7 +8,7 @@ namespace HierarchyVisualiser.Converters
     /// <summary>
     /// Converts the positions and dimensions of two Thumbs into Geometry Data of the connection line.
     /// </summary>
-    class ConnectionConverter : IMultiValueConverter
+    class ThumbsPosititionToConnectionConverter : IMultiValueConverter
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {

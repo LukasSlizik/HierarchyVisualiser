@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HierarchyVisualiser.ViewModels
+﻿namespace HierarchyVisualiser.ViewModels
 {
+    /// <summary>
+    /// Represents the Connection between ClassViewModels.
+    /// </summary>
     internal class ConnectionViewModel : ViewModelBase
     {
-        public ClassViewModel Start { get; set; }
-        public ClassViewModel End { get; set; }
+        public TypeViewModel Start { get; set; }
+        public TypeViewModel End { get; set; }
     }
 }
