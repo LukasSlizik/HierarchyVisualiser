@@ -23,7 +23,6 @@
             <views:ConnectionView/>
         </DataTemplate>
 
-        <converters:ClassViewPosition2ConnectionLineConverter x:Key="ClassViewPosition2ConnectionLineConverter" />
         <converters:ClassPositionToMarginConverter x:Key="ClassPositionToMarginConverter" />
     </UserControl.Resources>
 
