@@ -4,6 +4,9 @@ using HierarchyVisualiser.ViewModels;
 
 namespace HierarchyVisualiser.Behaviors
 {
+    /// <summary>
+    /// Enables dragging of the Thumbs representing the classes, interfaces, ...
+    /// </summary>
     public static class ThumbDragBehavior
     {
         /// <summary>

@@ -59,7 +59,6 @@
     <Compile Include="Behaviors\ThumbDragBehaviour.cs" />
     <Compile Include="Commands\GenericRelayCommand.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
-    <Compile Include="Controls\MyThumb.cs" />
     <Compile Include="Converters\ClassViewPosition2ConnectionLineConverter.cs" />
     <Compile Include="Converters\ClassPositionToMarginConverter.cs" />
     <Compile Include="Converters\ConnectionConverter.cs" />

@@ -73,9 +73,16 @@ namespace HierarchyVisualiser.ViewModels
 
         private void RegistCommands()
         {
-            ShowBaseCommand = new GenericRelayCommand<ClassViewModel>(OnShowBaseCommandExecute);
-            ShowInterfacesCommand = new GenericRelayCommand<ClassViewModel>(OnShowInterfacesCommandExecute);
+            ShowBaseCommand = new GenericRelayCommand<ClassViewModel>(OnShowBaseCommandExecute, OnShowBaseCommandCanExecute);
+            ShowInterfacesCommand = new GenericRelayCommand<ClassViewModel>(OnShowInterfacesCommandExecute, (classVm) => true);
         }
+
+        private bool OnShowBaseCommandCanExecute(ClassViewModel classVm)
+        {
+            // Object doesn't have any base class -> disable
+            return classVm?.WrappedType?.BaseType != null;
+        }
+            
 
         private void OnShowInterfacesCommandExecute(ClassViewModel classVm)
         {
@@ -110,8 +117,8 @@ namespace HierarchyVisualiser.ViewModels
             var baseType = classVm.WrappedType.BaseType;
 
             // if t is already object, then there is no base type
-            if (baseType == null)
-                return;
+            //if (baseType == null)
+            //    return;
 
             var newClassVm = new ClassViewModel(baseType);
             if (ShownClasses.Contains(newClassVm))

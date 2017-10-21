@@ -6,7 +6,6 @@
              xmlns:behaviors="clr-namespace:HierarchyVisualiser.Behaviors"
              xmlns:local="clr-namespace:HierarchyVisualiser.Views"
              xmlns:viewModels="clr-namespace:HierarchyVisualiser.ViewModels"
-             xmlns:controls="clr-namespace:HierarchyVisualiser.Controls"
              xmlns:converters="clr-namespace:HierarchyVisualiser.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
@@ -104,8 +103,8 @@
         </ResourceDictionary>
     </UserControl.Resources>
 
-    <controls:MyThumb behaviors:ThumbDragBehavior.ThumbCanBeDragged="True">
-        <controls:MyThumb.Template>
+    <Thumb behaviors:ThumbDragBehavior.ThumbCanBeDragged="True">
+        <Thumb.Template>
             <ControlTemplate>
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -152,6 +151,6 @@
                     </Border>
                 </Grid>
             </ControlTemplate>
-        </controls:MyThumb.Template>
-    </controls:MyThumb>
+        </Thumb.Template>
+    </Thumb>
 </UserControl> 

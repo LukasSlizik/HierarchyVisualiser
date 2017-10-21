@@ -1,9 +1,12 @@
-﻿using System.Windows;
+﻿using HierarchyVisualiser.Contracts;
+using System.Windows;
 using System.Windows.Controls;
-using HierarchyVisualiser.Contracts;
 
 namespace HierarchyVisualiser.Behaviors
 {
+    /// <summary>
+    /// Enables to drop .dll files directly onto the assembly tree.
+    /// </summary>
     public static class DragAndDropFileOnTreeViewBehavior
     {
         #region IsDraggableProperty

@@ -24,24 +24,10 @@ namespace HierarchyVisualiser.Commands
 
         public event EventHandler CanExecuteChanged;
 
-        public bool CanExecute(object p)
-        {
-            return CanExecute();
-        }
+        public bool CanExecute(object p) => CanExecute();
+        public bool CanExecute() => _canExecute();
 
-        public void Execute(object p)
-        {
-            Execute();
-        }
-
-        public bool CanExecute()
-        {
-            return _canExecute();
-        }
-
-        public void Execute()
-        {
-            _execute();
-        }
+        public void Execute(object p) => Execute();
+        public void Execute() => _execute();
     }
 }
