@@ -16,7 +16,7 @@
 
     <UserControl.Resources>
         <DataTemplate DataType="{x:Type viewModels:TypeViewModel}">
-            <views:ClassView/>
+            <views:TypeView/>
         </DataTemplate>
 
         <DataTemplate DataType="{x:Type viewModels:ConnectionViewModel}">

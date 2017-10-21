@@ -7,16 +7,16 @@ namespace HierarchyVisualiser.Views
     /// <summary>
     /// Interaction logic for ClassView.xaml
     /// </summary>
-    public partial class ClassView : UserControl
+    public partial class TypeView : UserControl
     {
-        public ClassView()
+        public TypeView()
         {
             InitializeComponent();
         }
 
         private void OnSizeChanged(object sender, SizeChangedEventArgs e)
         {
-            var classView = (ClassView)sender;
+            var classView = (TypeView)sender;
             var classViewModel = (TypeViewModel)classView.DataContext;
             classViewModel.Width = e.NewSize.Width;
             classViewModel.Height = e.NewSize.Height;

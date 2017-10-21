@@ -12,12 +12,16 @@ namespace HierarchyVisualiser.Converters
     {
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
         {
-            var startPositionX = (double)values[0];
-            var startPositionY = (double)values[1];
-            var endPositionX = (double)values[2];
-            var endPositionY = (double)values[3];
+            var startX = (double)values[0];
+            var startY = (double)values[1];
+            var startWidth = (double)values[2];
+            var startHeight = (double)values[3];
+            var endX = (double)values[4];
+            var endY = (double)values[5];
+            var endWidth = (double)values[6];
+            var endHeight = (double)values[7];
 
-            return new LineGeometry(new System.Windows.Point(startPositionX, startPositionY), new System.Windows.Point(endPositionX, endPositionY));
+            return new LineGeometry(new System.Windows.Point(startX + (startWidth / 2), startY), new System.Windows.Point(endX + (endWidth / 2), endY + endHeight));
         }
 
         public object[] ConvertBack(object value, Type[] targetType, object parameter, CultureInfo culture)

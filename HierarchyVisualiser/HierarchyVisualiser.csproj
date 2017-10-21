@@ -69,7 +69,7 @@
     <Compile Include="ViewModels\ConnectionViewModel.cs" />
     <Compile Include="ViewModels\NamespaceViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
-    <Page Include="Views\ClassView.xaml">
+    <Page Include="Views\TypeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -89,10 +89,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Views\ClassView.xaml.cs">
-      <DependentUpon>ClassView.xaml</DependentUpon>
+    <Compile Include="Views\TypeView.xaml.cs">
+      <DependentUpon>TypeView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModels\ClassViewModel.cs" />
+    <Compile Include="ViewModels\TypeViewModel.cs" />
     <Compile Include="Views\ConnectionView.xaml.cs">
       <DependentUpon>ConnectionView.xaml</DependentUpon>
     </Compile>

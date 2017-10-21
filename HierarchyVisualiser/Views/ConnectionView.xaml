@@ -21,8 +21,12 @@
             <MultiBinding Converter="{StaticResource ConnectionConverter}" >
                 <Binding Path="Start.X"/>
                 <Binding Path="Start.Y"/>
+                <Binding Path="Start.Width"/>
+                <Binding Path="Start.Height" />
                 <Binding Path="End.X"/>
                 <Binding Path="End.Y"/>
+                <Binding Path="End.Width"/>
+                <Binding Path="End.Height" />
             </MultiBinding>
         </Path.Data>
 
