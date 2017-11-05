@@ -62,6 +62,7 @@
     <Compile Include="Converters\ClassPositionToMarginConverter.cs" />
     <Compile Include="Converters\ThumbsPosititionToConnectionConverter.cs" />
     <Compile Include="Helpers\Extensions.cs" />
+    <Compile Include="Models\ConnectionType.cs" />
     <Compile Include="ViewModels\AssemblyViewModel.cs" />
     <Compile Include="ViewModels\ClassMembers\ClassMemberViewModel.cs" />
     <Compile Include="Models\MemberType.cs" />

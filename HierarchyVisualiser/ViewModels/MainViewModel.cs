@@ -124,10 +124,7 @@ namespace HierarchyVisualiser.ViewModels
         /// </summary>
         private void Connect(TypeViewModel child, TypeViewModel parent)
         {
-            var connectionVm = new ConnectionViewModel();
-            connectionVm.Start = child;
-            connectionVm.End = parent;
-            Connections.Add(connectionVm);
+            Connections.Add(new ConnectionViewModel(child, parent, Models.ConnectionType.Inheritance));
         }
 
         public void LoadAssemblyFromFile(string file)
