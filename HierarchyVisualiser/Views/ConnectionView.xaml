@@ -14,7 +14,7 @@
 
     <Path x:Name="Arrow" 
           Stroke="DarkGray" 
-          Fill="DarkGray"
+          Fill="Transparent"
           VerticalAlignment="Top"
           StrokeThickness="1">
         <Path.Data>
