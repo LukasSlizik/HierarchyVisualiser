@@ -49,7 +49,15 @@ namespace HierarchyVisualiser.ViewModels
         {
             var classViewModel = (TypeViewModel)sender;
             if (classViewModel.IsSelected)
+            {
                 ShownTypes.Add(classViewModel);
+
+                // automatically connect to parent in case parent is already shown
+                var baseType = classViewModel.WrappedType.BaseType;
+                var parent = GetFromShown(baseType);
+                if (parent != null)
+                    Connect(classViewModel, parent);
+            }
             else
                 ShownTypes.Remove(classViewModel);
         }
@@ -90,7 +98,14 @@ namespace HierarchyVisualiser.ViewModels
         {
             foreach (var @interface in child.WrappedType.GetInterfaces())
             {
-                var newInterface = GetOrCreateViewModel(@interface);
+                var newInterface = GetFromShown(@interface);
+
+                if (newInterface == null)
+                {
+                    newInterface = new TypeViewModel(@interface);
+                    ShownTypes.Add(newInterface);
+                }
+
                 Connect(child, newInterface);
             }
         }
@@ -98,25 +113,24 @@ namespace HierarchyVisualiser.ViewModels
         /// <summary>
         /// Connects the child with it's parent.
         /// </summary>
-        private void OnShowBaseCommandExecute(TypeViewModel child)
+        private void OnShowBaseCommandExecute(TypeViewModel @class)
         {
-            var parent = GetOrCreateViewModel(child.WrappedType.BaseType);
-            Connect(child, parent);
+            var parent = GetFromShown(@class.WrappedType.BaseType);
+            if (parent == null)
+            {
+                parent = new TypeViewModel(@class.WrappedType.BaseType);
+                ShownTypes.Add(parent);
+            }
+
+            Connect(@class, parent);
         }
 
         /// <summary>
-        /// Get the TypeViewModel representing the type or create new ViewModel
+        /// Returns the ViewModel from already shown ViewModels.
         /// </summary>
-        private TypeViewModel GetOrCreateViewModel(Type t)
+        private TypeViewModel GetFromShown(Type t)
         {
-            var newInterface = ShownTypes.SingleOrDefault(c => c.FullName == t.FullName);
-            if (newInterface == null)
-            {
-                newInterface = new TypeViewModel(t);
-                ShownTypes.Add(newInterface);
-            }
-
-            return newInterface;
+            return ShownTypes.SingleOrDefault(c => c.FullName == t.FullName);
         }
 
         /// <summary>
