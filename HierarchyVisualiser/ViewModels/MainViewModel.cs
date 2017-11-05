@@ -57,6 +57,14 @@ namespace HierarchyVisualiser.ViewModels
                 var parent = GetFromShown(baseType);
                 if (parent != null)
                     Connect(classViewModel, parent);
+
+                // automatically connect to all interfaces that are already shown
+                foreach (var @interface in classViewModel.WrappedType.GetInterfaces())
+                {
+                    var interfaceViewModel = GetFromShown(@interface);
+                    if (interfaceViewModel != null)
+                        Connect(classViewModel, interfaceViewModel);
+                }
             }
             else
                 ShownTypes.Remove(classViewModel);
