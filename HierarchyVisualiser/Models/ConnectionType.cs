@@ -3,7 +3,7 @@
     internal enum ConnectionType
     {
         Inheritance,
-        InterfaceImlementation,
+        Implementation,
         Composition
     }
 }

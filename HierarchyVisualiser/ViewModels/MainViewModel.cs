@@ -4,6 +4,7 @@ using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Reflection;
+using HierarchyVisualiser.Models;
 
 namespace HierarchyVisualiser.ViewModels
 {
@@ -56,18 +57,21 @@ namespace HierarchyVisualiser.ViewModels
                 var baseType = classViewModel.WrappedType.BaseType;
                 var parent = GetFromShown(baseType);
                 if (parent != null)
-                    Connect(classViewModel, parent);
+                    Connect(classViewModel, parent, ConnectionType.Inheritance);
 
                 // automatically connect to all interfaces that are already shown
                 foreach (var @interface in classViewModel.WrappedType.GetInterfaces())
                 {
                     var interfaceViewModel = GetFromShown(@interface);
                     if (interfaceViewModel != null)
-                        Connect(classViewModel, interfaceViewModel);
+                        Connect(classViewModel, interfaceViewModel, ConnectionType.Implementation);
                 }
             }
             else
+            {
+                Disconnect(classViewModel);
                 ShownTypes.Remove(classViewModel);
+            }
         }
 
         public bool TryLoadAssemblyFromFile(string file)
@@ -114,7 +118,7 @@ namespace HierarchyVisualiser.ViewModels
                     ShownTypes.Add(newInterface);
                 }
 
-                Connect(child, newInterface);
+                Connect(child, newInterface, ConnectionType.Implementation);
             }
         }
 
@@ -130,7 +134,7 @@ namespace HierarchyVisualiser.ViewModels
                 ShownTypes.Add(parent);
             }
 
-            Connect(@class, parent);
+            Connect(@class, parent, ConnectionType.Inheritance);
         }
 
         /// <summary>
@@ -144,9 +148,18 @@ namespace HierarchyVisualiser.ViewModels
         /// <summary>
         /// Creates new ConnectionViewModel and connects the child with it's parent
         /// </summary>
-        private void Connect(TypeViewModel child, TypeViewModel parent)
+        private void Connect(TypeViewModel child, TypeViewModel parent, ConnectionType connType)
         {
-            Connections.Add(new ConnectionViewModel(child, parent, Models.ConnectionType.Inheritance));
+            Connections.Add(new ConnectionViewModel(child, parent, connType));
+        }
+
+        private void Disconnect(TypeViewModel vm)
+        {
+            var connToRemove = Connections.Where(c =>
+                                                      (c.Start.FullName == vm.FullName) ||
+                                                      (c.End.FullName == vm.FullName)).ToList();
+
+            connToRemove.ForEach(c => Connections.Remove(c));
         }
 
         public void LoadAssemblyFromFile(string file)
